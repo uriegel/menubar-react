@@ -10,3 +10,5 @@ export const SubMenu = ({name}: SubMenuProps) => {
         <MenuItem name={name} isAccelerated={false} />
     )
 }
+// TODO MenuItem onClick opens/closes SubMenu
+// TODO SubMenu consists of MenuItems
