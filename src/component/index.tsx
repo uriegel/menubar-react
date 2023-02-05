@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 
-const Menubar = () => {
+type Props = {
+    children: JSX.Element[]
+}
+
+
+const Menubar = ({ children }: Props ) => {
     return (
-        <div>Hello Menubar component</div>
+        <div>
+            {children}
+        </div>
     )
 }
 
