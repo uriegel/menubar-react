@@ -1,9 +1,10 @@
 import './App.css'
+import Menubar from './component'
 
 const App = () => {
 	return (
 		<div className="App">
-			Hello Menubar
+			<Menubar></Menubar>
 		</div>
 	)
 }

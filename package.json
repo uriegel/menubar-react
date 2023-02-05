@@ -1,6 +1,14 @@
 {
   "name": "menubar-react",
-  "version": "0.1.0",
+  "version": "0.0.1",
+  "description": "A Windows like menubar for React",
+  "author": "uriegel",
+  "license": "MIT",
+  "repository": "uriegel/menubar-react",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
     "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -17,9 +25,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "typescript": "tsc -p src/component",
+    "copy": "cp src/component/Menubar.css dist/",
+    "do publish test": "npm run typescript && npm run copy &&  npm publish --dry-run",
+    "do publish": "npm run typescript && npm run copy && npm publish"
   },
   "eslintConfig": {
     "extends": [
