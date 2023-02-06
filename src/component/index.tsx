@@ -19,7 +19,6 @@ const Menubar = ({ items }: MenubarProps ) => {
     const onBlur = () => closeMenu()
     
     useEffect(() => {
-        console.log("Initializing...")
         const clickListener = (evt: Event) => setSelectedIndex((evt as CustomEvent).detail.index)
         document.addEventListener('menubar-clicked', clickListener);
         return () => document.removeEventListener('menubar-clicked', clickListener)
