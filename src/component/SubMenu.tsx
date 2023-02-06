@@ -37,9 +37,22 @@ export const SubMenu = ({name, index, selectedIndex, subMenuOpened, items}: SubM
                 evt.stopPropagation()
             } else if (evt.code == "ArrowUp") {
                 selectNext(false)
-                console.log("hoch")
                 evt.preventDefault()
                 evt.stopPropagation()
+            } else if (evt.code == "Enter" || evt.code == "Space") {
+                const item = items[selectedItem]
+                if (item.type == MenuItemType.MenuItem) {
+                    document.dispatchEvent(new CustomEvent('menuitem-clicked', {
+                        bubbles: true,
+                        composed: true,
+                        detail: item.key ?? item.name
+                    }))
+                } else if (item.type == MenuItemType.MenuCheckItem) 
+                    item.setChecked(!item.checked)
+                document.dispatchEvent(new CustomEvent('menuitem-closed', {
+                    bubbles: true,
+                    composed: true
+                }))
             }
         }
         
@@ -47,13 +60,13 @@ export const SubMenu = ({name, index, selectedIndex, subMenuOpened, items}: SubM
         return () => {
             document.removeEventListener('keydown', keydownListener)
         }
-    }, [selectedItem, items])
+    }, [selectedItem, items, index])
 
     const onClick = () => {
         document.dispatchEvent(new CustomEvent('menubar-clicked', {
             bubbles: true,
             composed: true,
-            detail: { index: index }
+            detail: { index }
         }))    
     }
 
@@ -62,7 +75,7 @@ export const SubMenu = ({name, index, selectedIndex, subMenuOpened, items}: SubM
             document.dispatchEvent(new CustomEvent('menubar-mouseover', {
                 bubbles: true,
                 composed: true,
-                detail: { index: index }
+                detail: { index }
             }))    
     }
 
