@@ -1,3 +1,7 @@
+:root {
+    --mbr-menubar-hover-color: lightblue;
+}
+
 .mbr--menubar  {
     user-select: none;
     cursor: default;

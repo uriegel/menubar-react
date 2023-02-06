@@ -10,7 +10,9 @@ interface MenubarItemProps {
 export const MenubarItem = ({name}: MenubarItemProps) => {
     return (
         <li className="mbr--menubaritem">
-            <MenuItem name={name} isAccelerated={false} />
+            <div className='mbr--header'>
+                <MenuItem name={name} isAccelerated={false} />
+            </div>
         </li>
     )
 }

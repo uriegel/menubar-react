@@ -3,3 +3,13 @@
     align-items: center;
     height: 100%;
 }
+
+.mbr--header {
+    height: 100%;
+    display: flex;
+    align-items: inherit;                    
+}
+
+.mbr--header:hover {
+    background-color: var(--mbr-menubar-hover-color);
+}
