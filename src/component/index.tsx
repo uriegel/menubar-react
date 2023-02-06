@@ -12,23 +12,37 @@ interface MenubarProps {
 
 const Menubar = ({ items }: MenubarProps ) => {
 
-    const closeMenu = () => {
-        setSelectedIndex(-1)
-    }
+    const [selectedIndex, setSelectedIndex] = useState(-1)
+    const [subMenuOpened, setSubMenuOpened] = useState(false)
+
+    useEffect(() => {
+        
+        const clickedListener = (evt: Event) => {
+            setSelectedIndex((evt as CustomEvent).detail.index)
+            setSubMenuOpened(true)
+        }
+
+        const mouseOverListener = (evt: Event) => setSelectedIndex((evt as CustomEvent).detail.index)
+
+        document.addEventListener('menubar-clicked', clickedListener);
+        document.addEventListener('menubar-mouseover', mouseOverListener);
+        return () => {
+            document.removeEventListener('menubar-clicked', clickedListener)
+            document.removeEventListener('menubar-clicked', mouseOverListener)
+        }
+        
+    }, [])
 
     const onBlur = () => closeMenu()
     
-    useEffect(() => {
-        const clickListener = (evt: Event) => setSelectedIndex((evt as CustomEvent).detail.index)
-        document.addEventListener('menubar-clicked', clickListener);
-        return () => document.removeEventListener('menubar-clicked', clickListener)
-    }, [])
-    
-    const [selectedIndex, setSelectedIndex] = useState(-1)
+    const closeMenu = () => {
+        setSubMenuOpened(false)
+        setSelectedIndex(-1)
+    }
 
     return (
-        <ul className="mbr--menubar" onBlur={onBlur}>
-            {items.map((n, i) => SubMenu({name: n.name, index: i, selectedIndex}))}
+        <ul className="mbr--menubar" onBlur={onBlur} tabIndex={-1}>
+            {items.map((n, i) => SubMenu({name: n.name, index: i, selectedIndex, subMenuOpened}))}
         </ul>
     )
 }

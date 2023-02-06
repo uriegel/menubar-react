@@ -22,10 +22,10 @@ const App = () => {
 				<button>Dritter</button>
 				<input type="checkbox" id="isHidden"/>
 				<span>Versteckte Dateien</span>
-				<input type="checkbox" checked id="showProperties"/>
+				<input type="checkbox" id="showProperties"/>
 				<span>Zeige Eigenschaften</span>
 			</p>
-			</div>		
+			</div>		 
 		</div>
 	)
 }

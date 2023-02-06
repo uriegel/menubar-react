@@ -6,12 +6,12 @@ interface SubMenuComponentProps {
     name: string
     index: number
     selectedIndex: number
+    subMenuOpened: boolean
 }
 
-export const SubMenu = ({name, index, selectedIndex}: SubMenuComponentProps) => {
+export const SubMenu = ({name, index, selectedIndex, subMenuOpened}: SubMenuComponentProps) => {
     return (
-        <MenubarItem name={name} index={index ?? -1} selectedIndex={selectedIndex} isAccelerated={false} />
+        <MenubarItem key={index} name={name} index={index ?? -1} selectedIndex={selectedIndex} 
+        isAccelerated={false} subMenuOpened={subMenuOpened} />
     )
 }
-// TODO MenuItem onClick opens/closes SubMenu
-// TODO SubMenu consists of MenuItems

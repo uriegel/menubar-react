@@ -7,9 +7,10 @@ interface MenubarItemProps {
     isAccelerated: boolean
     selectedIndex: number
     index: number
+    subMenuOpened: boolean
 }
 
-export const MenubarItem = ({name, index, selectedIndex}: MenubarItemProps) => {
+export const MenubarItem = ({name, index, selectedIndex, subMenuOpened}: MenubarItemProps) => {
 
     const onClick = () => {
         document.dispatchEvent(new CustomEvent('menubar-clicked', {
@@ -19,11 +20,31 @@ export const MenubarItem = ({name, index, selectedIndex}: MenubarItemProps) => {
         }))    
     }
 
+    const onMouseOver = () => {
+        if (subMenuOpened)
+            document.dispatchEvent(new CustomEvent('menubar-mouseover', {
+                bubbles: true,
+                composed: true,
+                detail: { index: index }
+            }))    
+    }
+
     return (
-        <li className={`mbr--menubaritem ${index == selectedIndex ? "selected" : ""}`} onClick={onClick}>
+        <li className={`mbr--menubaritem ${index == selectedIndex ? "selected" : ""}`} 
+                onClick={onClick} onMouseOver={onMouseOver}>
             <div className='mbr--header'>
                 <MenuItem name={name} isAccelerated={false} />
             </div>
+            {selectedIndex == index && subMenuOpened 
+            ?
+                <div className='mbr--submenu'>
+                    <div className='mbr--submenu_list'>
+                        <p>Bin offen</p>
+                        <p>Bin offen 2</p>                
+                        <p>Bin offen 3</p>
+                    </div>
+                </div>
+            : null} 
         </li>
     )
 }
