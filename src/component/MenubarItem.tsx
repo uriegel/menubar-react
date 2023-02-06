@@ -1,7 +1,8 @@
 import React from 'react'
-import { MenuItemProps } from '.'
+import { MenuItemProps, MenuItemType } from '.'
 import "./MenubarItem.css"
 import { MenuItem } from './MenuItem'
+import { Separator } from './Separator'
 
 interface MenubarItemProps {
     name: string
@@ -41,7 +42,13 @@ export const MenubarItem = ({name, index, selectedIndex, subMenuOpened, items}: 
             ?
                 <div className='mbr--submenu'>
                     <div className='mbr--submenu_list'>
-                        {items.map((n, i) => MenuItem({ name: n.name ?? "", isAccelerated: false }))}
+                        {items.map((n, i) => (
+                            <div className='mbr--submenu-item-container'>
+                                {n.type == MenuItemType.Separator
+                                ? (<Separator />)
+                                : (<MenuItem name={n.name ?? ""} isAccelerated={false} />)}
+                            </div>
+                        ))}
                     </div>
                 </div>
             : null} 

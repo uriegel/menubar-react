@@ -1,0 +1,4 @@
+.mbr--menubaritem hr {
+    border: solid var(--mbr-menubar-separator-color) 0.5px;
+    border-top-style: hidden;
+}
