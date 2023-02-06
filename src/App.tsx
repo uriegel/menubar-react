@@ -40,7 +40,7 @@ const App = () => {
 				}, { 
 					name: "_Navigation",
 					items: [{
-						name: "Öffnen_mit_Favoriten",
+						name: "_Favoriten",
 						type: MenuItemType.MenuItem
 					}, {
 						name: "_Gleichen Ordner öffnen",

@@ -53,7 +53,10 @@ const Menubar = ({ items }: MenubarProps ) => {
 
     return (
         <ul className="mbr--menubar" onBlur={onBlur} tabIndex={-1}>
-            {items.map((n, i) => SubMenu({name: n.name, index: i, selectedIndex, subMenuOpened, items: n.items}))}
+            {items.map((n, i) => SubMenu({
+                name: n.name, index: i, selectedIndex, subMenuOpened,
+                items: n.items, isAccelerated: false
+            }))}
         </ul>
     )
 }

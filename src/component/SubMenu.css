@@ -3,3 +3,38 @@
     z-index: 10000;
 }
 
+.mbr--menubaritem {
+    float: left;
+    align-items: center;
+    height: 100%;
+}
+
+.mbr--header {
+    height: 100%;
+    display: flex;
+    align-items: inherit;                    
+}
+
+.mbr--submenu_list {
+    color: var(--mbr-menubar-color);
+    background-color: var(--mbr-menubar-background-color);
+    z-index: 10000;
+    border-color: var(--mbr-menubar-border-color);
+    border-style: solid;
+    border-width: 1px;
+    white-space: nowrap;
+    box-shadow: 2px 2px 20px 2px var(--mbr-menubar-shadow-color);
+}
+
+.mbr--header:hover {
+    background-color: var(--mbr-menubar-hover-color);
+}
+
+.selected .mbr--header {
+    color: var(--mbr-menubar-selected-color);
+    background-color: var(--mbr-menubar-selected-background-color);
+}
+
+.mbr--submenu-item-container {
+    padding: 5px 20px 5px 0px;
+}
