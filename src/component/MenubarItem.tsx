@@ -1,4 +1,5 @@
 import React from 'react'
+import { MenuItemProps } from '.'
 import "./MenubarItem.css"
 import { MenuItem } from './MenuItem'
 
@@ -8,9 +9,10 @@ interface MenubarItemProps {
     selectedIndex: number
     index: number
     subMenuOpened: boolean
+    items: MenuItemProps[]
 }
 
-export const MenubarItem = ({name, index, selectedIndex, subMenuOpened}: MenubarItemProps) => {
+export const MenubarItem = ({name, index, selectedIndex, subMenuOpened, items}: MenubarItemProps) => {
 
     const onClick = () => {
         document.dispatchEvent(new CustomEvent('menubar-clicked', {
@@ -39,9 +41,7 @@ export const MenubarItem = ({name, index, selectedIndex, subMenuOpened}: Menubar
             ?
                 <div className='mbr--submenu'>
                     <div className='mbr--submenu_list'>
-                        <p>Bin offen</p>
-                        <p>Bin offen 2</p>                
-                        <p>Bin offen 3</p>
+                        {items.map((n, i) => MenuItem({ name: n.name ?? "", isAccelerated: false }))}
                     </div>
                 </div>
             : null} 

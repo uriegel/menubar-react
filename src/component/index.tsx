@@ -2,8 +2,19 @@ import React, { useEffect, useState } from 'react'
 import './Menubar.css'
 import { SubMenu } from './SubMenu'
 
+export enum MenuItemType {
+    MenuItem,
+    Separator
+}
+
+export interface MenuItemProps{
+    name?: string
+    type: MenuItemType
+}
+
 interface SubMenuProps{
     name: string
+    items: MenuItemProps[]
 }
 
 interface MenubarProps {
@@ -42,7 +53,7 @@ const Menubar = ({ items }: MenubarProps ) => {
 
     return (
         <ul className="mbr--menubar" onBlur={onBlur} tabIndex={-1}>
-            {items.map((n, i) => SubMenu({name: n.name, index: i, selectedIndex, subMenuOpened}))}
+            {items.map((n, i) => SubMenu({name: n.name, index: i, selectedIndex, subMenuOpened, items: n.items}))}
         </ul>
     )
 }
