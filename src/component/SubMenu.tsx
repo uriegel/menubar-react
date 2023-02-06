@@ -17,3 +17,5 @@ export const SubMenu = ({name, index, selectedIndex, subMenuOpened, items}: SubM
         isAccelerated={false} subMenuOpened={subMenuOpened} items={items} />
     )
 }
+
+// TODO: Not neccessary
