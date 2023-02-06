@@ -40,9 +40,10 @@ const Menubar = ({ items }: MenubarProps ) => {
 
     const [selectedIndex, setSelectedIndex] = useState(-1)
     const [subMenuOpened, setSubMenuOpened] = useState(false)
+    const [keyboardActivated, setKeyboardActivated] = useState(false)
+    const [isAccelerated, setIsAccelerated] = useState(false)
 
     useEffect(() => {
-        
         const clickedListener = (evt: Event) => {
             setSelectedIndex((evt as CustomEvent).detail.index)
             setSubMenuOpened(true)
@@ -63,11 +64,44 @@ const Menubar = ({ items }: MenubarProps ) => {
         
     }, [])
 
+    useEffect(() => {
+        const keydownListener = (evt: KeyboardEvent) => {
+            if (evt.key == "Alt" && !evt.repeat && evt.code == "AltLeft") {
+                if (isAccelerated) {
+                    closeMenu()
+                    return
+                }
+                if (!keyboardActivated) {
+                    if (selectedIndex == -1) {
+                        setKeyboardActivated(true)
+                        setSelectedIndex(0)
+                    }
+                    setIsAccelerated(true)
+                    // TODO
+                    //this.lastActive = document.activeElement as HTMLElement
+                    //this.focus()
+                }
+                evt.preventDefault()
+                evt.stopPropagation()                        
+            }
+            else if (evt.key == 'Escape') 
+                closeMenu()
+        }
+        
+        document.addEventListener('keydown', keydownListener)
+        return () => {
+            document.removeEventListener('keydown', keydownListener)
+        }
+        
+    }, [isAccelerated, keyboardActivated, selectedIndex])
+
     const onBlur = () => closeMenu()
     
     const closeMenu = () => {
         setSubMenuOpened(false)
         setSelectedIndex(-1)
+        setKeyboardActivated(false)
+        setIsAccelerated(false)
     }
 
     return (
@@ -82,7 +116,6 @@ const Menubar = ({ items }: MenubarProps ) => {
 
 export default Menubar
 
-// TODO alt-> Menu opens with accelerators
 // TODO Keyboard control mouse up/down in Submenu
 // TODO Shortcuts
 // TODO Accelerators
