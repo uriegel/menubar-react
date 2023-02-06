@@ -38,3 +38,8 @@
 .mbr--submenu-item-container {
     padding: 5px 20px 5px 0px;
 }
+
+.mbr--submenu-item-container.selected {
+    color: var(--mbr-menubar-selected-color);
+    background-color: var(--mbr-menubar-selected-background-color);
+}

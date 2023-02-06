@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { MenuItemProps, MenuItemType } from '.'
 import { MenuItem } from './MenuItem'
 import { Separator } from './Separator'
@@ -14,6 +14,8 @@ interface SubMenuComponentProps {
 }
 
 export const SubMenu = ({name, index, selectedIndex, subMenuOpened, items}: SubMenuComponentProps) => {
+
+    const [selectedItem, setSelectedItem] = useState(-1)
 
     const onClick = () => {
         document.dispatchEvent(new CustomEvent('menubar-clicked', {
@@ -42,13 +44,14 @@ export const SubMenu = ({name, index, selectedIndex, subMenuOpened, items}: SubM
             ?
                 <div className='mbr--submenu'>
                     <div className='mbr--submenu_list'>
-                        {items.map((n, i) => (
-                            <div className='mbr--submenu-item-container'>
-                                {n.type == MenuItemType.Separator
-                                ? (<Separator />)
-                                : (<MenuItem name={n.name ?? ""} isAccelerated={false} />)}
-                            </div>
-                        ))}
+                        {items.map((n, i) =>
+                            n.type != MenuItemType.Separator
+                                ? (<div key={i} className={`mbr--submenu-item-container ${i == selectedItem ? "selected" : ""}`}
+                                    onMouseOver={() => setSelectedItem(i)}>
+                                    <MenuItem name={n.name ?? ""} isAccelerated={false} />
+                                </div>)
+                                : (<Separator key={i} />)
+                        )}
                     </div>
                 </div>
             : null} 

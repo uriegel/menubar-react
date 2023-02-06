@@ -53,18 +53,18 @@ const Menubar = ({ items }: MenubarProps ) => {
 
     return (
         <ul className="mbr--menubar" onBlur={onBlur} tabIndex={-1}>
-            {items.map((n, i) => SubMenu({
-                name: n.name, index: i, selectedIndex, subMenuOpened,
-                items: n.items, isAccelerated: false
-            }))}
+            {items.map((n, i) =>
+                (<SubMenu key={i} name={n.name} index={i} selectedIndex={selectedIndex} subMenuOpened = { subMenuOpened }
+                items = { n.items } isAccelerated = {false} />)
+            )}
         </ul>
     )
 }
 
 export default Menubar
 
-// TODO Selector for checkbox
-// TODO Shortcuts
 // TODO Callbacks/events when clicked
+// TODO Selector for checkbox / state
 // TODO alt-> Menu opens with accelerators
-// TODO Keyboard control
+// TODO Keyboard control mouse up/down in Submenu
+// TODO Shortcuts
