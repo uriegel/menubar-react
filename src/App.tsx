@@ -1,16 +1,15 @@
 import './App.css'
 import Menubar from './component'
-import { SubMenu } from './component/SubMenu'
 
 const App = () => {
 	return (
 		<div className="App">
-			<Menubar>
-				<SubMenu name="_Datei" />
-				<SubMenu name="_Navigation" />
-				<SubMenu name="_Selektion"/>
-				<SubMenu name="_Ansicht"/>
-			</Menubar>
+			<Menubar items={[
+				{ name: "_Datei" },
+				{ name: "_Navigation" },
+				{ name: "_Selektion" },
+				{ name: "_Ansicht" },
+				]} />
 			<div> 
 			<h1>Menubar</h1>
 			<div  id="absolute">Ich bin absolut! Ich bin absolut! Ich bin absolut! Ich bin absolut! Ich bin absolut! Ich bin absolut!</div>

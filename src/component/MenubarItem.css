@@ -13,3 +13,7 @@
 .mbr--header:hover {
     background-color: var(--mbr-menubar-hover-color);
 }
+
+.selected .mbr--header {
+    background-color: red;
+}

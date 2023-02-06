@@ -1,14 +1,35 @@
-import React from 'react'
-import "./Menubar.css"
+import React, { useEffect, useState } from 'react'
+import './Menubar.css'
+import { SubMenu } from './SubMenu'
 
-type Props = {
-    children: JSX.Element[]
+interface SubMenuProps{
+    name: string
 }
 
-const Menubar = ({ children }: Props ) => {
+interface MenubarProps {
+    items: SubMenuProps[]
+}
+
+const Menubar = ({ items }: MenubarProps ) => {
+
+    const closeMenu = () => {
+        setSelectedIndex(-1)
+    }
+
+    const onBlur = () => closeMenu()
+    
+    useEffect(() => {
+        console.log("Initializing...")
+        const clickListener = (evt: Event) => setSelectedIndex((evt as CustomEvent).detail.index)
+        document.addEventListener('menubar-clicked', clickListener);
+        return () => document.removeEventListener('menubar-clicked', clickListener)
+    }, [])
+    
+    const [selectedIndex, setSelectedIndex] = useState(-1)
+
     return (
-        <ul className="mbr--menubar">
-            {children}
+        <ul className="mbr--menubar" onBlur={onBlur}>
+            {items.map((n, i) => SubMenu({name: n.name, index: i, selectedIndex}))}
         </ul>
     )
 }
