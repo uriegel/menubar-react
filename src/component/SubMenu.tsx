@@ -34,13 +34,27 @@ export const SubMenu = ({name, index, selectedIndex, subMenuOpened, items}: SubM
             }))    
     }
 
-    const onItemClick = (key: string, type: MenuItemType) => {
-        if (type == MenuItemType.MenuItem)
-            document.dispatchEvent(new CustomEvent('menuitem-clicked', {
-                bubbles: true,
-                composed: true,
-                detail: key
-            }))    
+    const onItemClick = (item: MenuItemProps) => {
+        switch (item.type) {
+            case MenuItemType.MenuItem:
+                document.dispatchEvent(new CustomEvent('menuitem-clicked', {
+                    bubbles: true,
+                    composed: true,
+                    detail: item.key ?? item.name
+                }))    
+                document.dispatchEvent(new CustomEvent('menuitem-closed', {
+                    bubbles: true,
+                    composed: true
+                }))    
+                break
+            case MenuItemType.MenuCheckItem:
+                item.setChecked(!item.checked)
+                document.dispatchEvent(new CustomEvent('menuitem-closed', {
+                    bubbles: true,
+                    composed: true
+                }))    
+                break
+        }
     }
 
     return (
@@ -55,8 +69,9 @@ export const SubMenu = ({name, index, selectedIndex, subMenuOpened, items}: SubM
                     <div className='mbr--submenu_list'>
                         {items.map((n, i) =>
                             n.type != MenuItemType.Separator
-                                ? (<div key={i} className={`mbr--submenu-item-container ${i == selectedItem ? "selected" : ""}`}
-                                    onMouseOver={() => setSelectedItem(i)} onClick={() => onItemClick(n.key ?? n.name ?? "", n.type)}>
+                                ? (<div key={i}
+                                    className={`mbr--submenu-item-container ${i == selectedItem ? "selected" : ""} ${n.type == MenuItemType.MenuCheckItem && n.checked ? "checked" : ""}`}
+                                    onMouseOver={() => setSelectedItem(i)} onClick={() => onItemClick(n)}>
                                     <MenuItem name={n.name ?? ""} isAccelerated={false} />
                                 </div>)
                                 : (<Separator key={i} />)

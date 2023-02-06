@@ -1,8 +1,10 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Menubar, { MenuItemType } from './component'
 
 const App = () => {
+
+	const [isHidden, setIsHidden] = useState(false)
 
     useEffect(() => {
         
@@ -77,7 +79,9 @@ const App = () => {
 					name: "_Ansicht",
 					items: [{
 						name: "_Versteckte Dateien",
-						type: MenuItemType.MenuItem
+						checked: isHidden,
+						setChecked: setIsHidden,
+						type: MenuItemType.MenuCheckItem
 					}, {
 						name: "_Aktualisieren",
 						type: MenuItemType.MenuItem

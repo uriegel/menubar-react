@@ -8,11 +8,24 @@ export enum MenuItemType {
     Separator
 }
 
-export interface MenuItemProps{
+interface SeparatorProps {
+    type: MenuItemType.Separator
+}
+
+interface MenuClickItemProps {
     name?: string
-    type: MenuItemType
+    type: MenuItemType.MenuItem
     key?: string
 }
+
+interface MenuCheckItemProps{
+    name?: string
+    type: MenuItemType.MenuCheckItem
+    checked: boolean
+    setChecked: (val: boolean)=>void
+}
+
+export type MenuItemProps = MenuClickItemProps | MenuCheckItemProps | SeparatorProps
 
 interface SubMenuProps{
     name: string
@@ -35,12 +48,16 @@ const Menubar = ({ items }: MenubarProps ) => {
             setSubMenuOpened(true)
         }
 
-        const mouseOverListener = (evt: Event) => setSelectedIndex((evt as CustomEvent).detail.index)
+        const itemCloseListener = () => setTimeout(closeMenu)
 
-        document.addEventListener('menubar-clicked', clickedListener);
-        document.addEventListener('menubar-mouseover', mouseOverListener);
+        const mouseOverListener = (evt: Event) => setSelectedIndex((evt as CustomEvent).detail.index)
+        
+        document.addEventListener('menubar-clicked', clickedListener)
+        document.addEventListener('menuitem-closed', itemCloseListener)
+        document.addEventListener('menubar-mouseover', mouseOverListener)
         return () => {
             document.removeEventListener('menubar-clicked', clickedListener)
+            document.removeEventListener('menuitem-closed', itemCloseListener)
             document.removeEventListener('menubar-clicked', mouseOverListener)
         }
         
@@ -65,8 +82,7 @@ const Menubar = ({ items }: MenubarProps ) => {
 
 export default Menubar
 
-// TODO Callbacks/events when clicked
-// TODO Selector for checkbox / state
+// TODO Selector for checkbox
 // TODO alt-> Menu opens with accelerators
 // TODO Keyboard control mouse up/down in Submenu
 // TODO Shortcuts
