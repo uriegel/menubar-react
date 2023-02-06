@@ -68,3 +68,6 @@ export default Menubar
 // TODO alt-> Menu opens with accelerators
 // TODO Keyboard control mouse up/down in Submenu
 // TODO Shortcuts
+// TODO Accelerators
+// TODO Theming
+// TODO Automode
