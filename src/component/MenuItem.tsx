@@ -1,4 +1,5 @@
 import React from 'react'
+import './MenuItem.css'
 
 interface MenuItemProps {
     name: string
@@ -11,7 +12,7 @@ export const MenuItem = ({ name }: MenuItemProps) => {
         str.replace('_', '')
 
     return (
-        <div>
+        <div className='mbr--menuitem'>
             {removeUnderscore(name)}
         </div>
     )

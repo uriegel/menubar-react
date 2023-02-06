@@ -1,5 +1,6 @@
 import React from 'react'
-import { MenuItem } from './MenuItem'
+import { MenubarItem } from './MenubarItem'
+import "./SubMenu.css"
 
 interface SubMenuProps{
     name: string
@@ -7,7 +8,7 @@ interface SubMenuProps{
 
 export const SubMenu = ({name}: SubMenuProps) => {
     return (
-        <MenuItem name={name} isAccelerated={false} />
+        <MenubarItem name={name} isAccelerated={false} />
     )
 }
 // TODO MenuItem onClick opens/closes SubMenu

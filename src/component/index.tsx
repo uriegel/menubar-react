@@ -1,15 +1,15 @@
-import React, { PropsWithChildren } from 'react'
+import React from 'react'
+import "./Menubar.css"
 
 type Props = {
     children: JSX.Element[]
 }
 
-
 const Menubar = ({ children }: Props ) => {
     return (
-        <div>
+        <ul className="mbr--menubar">
             {children}
-        </div>
+        </ul>
     )
 }
 

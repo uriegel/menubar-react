@@ -1,0 +1,6 @@
+.mbr--menuitem {
+    padding: 2px 5px;
+    align-items: center;
+    height: 100%;
+    display: flex;
+}
