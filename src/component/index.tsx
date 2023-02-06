@@ -82,7 +82,6 @@ const Menubar = ({ items }: MenubarProps ) => {
 
 export default Menubar
 
-// TODO Selector for checkbox
 // TODO alt-> Menu opens with accelerators
 // TODO Keyboard control mouse up/down in Submenu
 // TODO Shortcuts

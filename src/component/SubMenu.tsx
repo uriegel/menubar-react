@@ -72,7 +72,10 @@ export const SubMenu = ({name, index, selectedIndex, subMenuOpened, items}: SubM
                                 ? (<div key={i}
                                     className={`mbr--submenu-item-container ${i == selectedItem ? "selected" : ""} ${n.type == MenuItemType.MenuCheckItem && n.checked ? "checked" : ""}`}
                                     onMouseOver={() => setSelectedItem(i)} onClick={() => onItemClick(n)}>
-                                    <MenuItem name={n.name ?? ""} isAccelerated={false} />
+                                    <div className='mbr--submenu-item-content'>
+                                        <span className='mbr--submenu-item-check'>✓</span>
+                                        <MenuItem name={n.name ?? ""} isAccelerated={false} />
+                                    </div>
                                 </div>)
                                 : (<Separator key={i} />)
                         )}

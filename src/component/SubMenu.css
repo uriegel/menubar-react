@@ -44,6 +44,17 @@
     background-color: var(--mbr-menubar-selected-background-color);
 }
 
-.mbr--submenu-item-container.checked {
-    opacity: 0.4;
+.mbr--submenu-item-content {
+    display: flex;
+    flex-grow: 1;
+}
+
+.mbr--submenu-item-check {
+    display: inline-block;
+    opacity: 0;
+    padding: 0px 7px;
+}
+
+.mbr--submenu-item-container.checked .mbr--submenu-item-check {
+    opacity: 1;
 }
