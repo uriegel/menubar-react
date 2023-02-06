@@ -1,7 +1,24 @@
+import { useEffect } from 'react'
 import './App.css'
 import Menubar, { MenuItemType } from './component'
 
 const App = () => {
+
+    useEffect(() => {
+        
+		const menuItemClick = (evt: Event) => {
+			console.log("Click", (evt as CustomEvent).detail)
+			if ((evt as CustomEvent).detail == "END")
+				window.close()
+        }
+
+        document.addEventListener('menuitem-clicked', menuItemClick);
+		return () => {
+			document.removeEventListener('menuitem-clicked', menuItemClick)
+        }
+        
+    }, [])
+
 	return (
 		<div className="App">
 			<Menubar items={[{ 
@@ -35,7 +52,8 @@ const App = () => {
 					}, { type: MenuItemType.Separator 						
 					}, {
 						name: "_Beenden",
-						type: MenuItemType.MenuItem
+						type: MenuItemType.MenuItem,
+						key: "END"
 					}]
 				}, { 
 					name: "_Navigation",

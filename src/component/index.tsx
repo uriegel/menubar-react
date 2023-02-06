@@ -4,12 +4,14 @@ import { SubMenu } from './SubMenu'
 
 export enum MenuItemType {
     MenuItem,
+    MenuCheckItem,
     Separator
 }
 
 export interface MenuItemProps{
     name?: string
     type: MenuItemType
+    key?: string
 }
 
 interface SubMenuProps{

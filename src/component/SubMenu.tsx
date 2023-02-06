@@ -34,6 +34,15 @@ export const SubMenu = ({name, index, selectedIndex, subMenuOpened, items}: SubM
             }))    
     }
 
+    const onItemClick = (key: string, type: MenuItemType) => {
+        if (type == MenuItemType.MenuItem)
+            document.dispatchEvent(new CustomEvent('menuitem-clicked', {
+                bubbles: true,
+                composed: true,
+                detail: key
+            }))    
+    }
+
     return (
         <li className={`mbr--menubaritem ${index == selectedIndex ? "selected" : ""}`} 
                 onClick={onClick} onMouseOver={onMouseOver}>
@@ -47,7 +56,7 @@ export const SubMenu = ({name, index, selectedIndex, subMenuOpened, items}: SubM
                         {items.map((n, i) =>
                             n.type != MenuItemType.Separator
                                 ? (<div key={i} className={`mbr--submenu-item-container ${i == selectedItem ? "selected" : ""}`}
-                                    onMouseOver={() => setSelectedItem(i)}>
+                                    onMouseOver={() => setSelectedItem(i)} onClick={() => onItemClick(n.key ?? n.name ?? "", n.type)}>
                                     <MenuItem name={n.name ?? ""} isAccelerated={false} />
                                 </div>)
                                 : (<Separator key={i} />)
