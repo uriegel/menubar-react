@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MenuItemProps, MenuItemType } from '.'
 import { MenuItem } from './MenuItem'
 import { Separator } from './Separator'
@@ -16,6 +16,38 @@ interface SubMenuComponentProps {
 export const SubMenu = ({name, index, selectedIndex, subMenuOpened, items}: SubMenuComponentProps) => {
 
     const [selectedItem, setSelectedItem] = useState(-1)
+
+    useEffect(() => {
+        const selectNext = (next: boolean, n: number = 1) => {
+            let pos = selectedItem + (next ? n : -n);
+            if (pos < 0)
+                pos = items.length - 1
+            if (pos >= items.length)
+                pos = 0
+            if (items[pos].type != MenuItemType.Separator)
+                setSelectedItem(pos)
+            else
+                selectNext(next, 2)
+        }
+
+        const keydownListener = (evt: KeyboardEvent) => {
+            if (evt.code == "ArrowDown") {
+                selectNext(true)
+                evt.preventDefault()
+                evt.stopPropagation()
+            } else if (evt.code == "ArrowUp") {
+                selectNext(false)
+                console.log("hoch")
+                evt.preventDefault()
+                evt.stopPropagation()
+            }
+        }
+        
+        document.addEventListener('keydown', keydownListener)
+        return () => {
+            document.removeEventListener('keydown', keydownListener)
+        }
+    }, [selectedItem, items])
 
     const onClick = () => {
         document.dispatchEvent(new CustomEvent('menubar-clicked', {
@@ -69,7 +101,7 @@ export const SubMenu = ({name, index, selectedIndex, subMenuOpened, items}: SubM
                     <div className='mbr--submenu_list'>
                         {items.map((n, i) =>
                             n.type != MenuItemType.Separator
-                                ? (<div key={i}
+                                ? (<div key={i} tabIndex={-1} 
                                     className={`mbr--submenu-item-container ${i == selectedItem ? "selected" : ""} ${n.type == MenuItemType.MenuCheckItem && n.checked ? "checked" : ""}`}
                                     onMouseOver={() => setSelectedItem(i)} onClick={() => onItemClick(n)}>
                                     <div className='mbr--submenu-item-content'>
