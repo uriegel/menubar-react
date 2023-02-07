@@ -23,6 +23,14 @@ export const SubMenu = ({name, index, selectedIndex, subMenuOpened, items}: SubM
         }))    
     }
 
+    const onMouseDown = () => {
+        document.dispatchEvent(new CustomEvent('menubar-mousedown', {
+            bubbles: true,
+            composed: true,
+            detail: { index }
+        }))    
+    }
+
     const onMouseOver = () => {
         if (subMenuOpened)
             document.dispatchEvent(new CustomEvent('menubar-mouseover', {
@@ -34,7 +42,7 @@ export const SubMenu = ({name, index, selectedIndex, subMenuOpened, items}: SubM
 
     return (
         <li className={`mbr--menubaritem ${index == selectedIndex ? "selected" : ""}`} 
-                onClick={onClick} onMouseOver={onMouseOver}>
+                onClick={onClick} onMouseOver={onMouseOver} onMouseDown={onMouseDown}>
             <div className='mbr--header'>
                 <MenuItem name={name} isAccelerated={false} />
             </div>

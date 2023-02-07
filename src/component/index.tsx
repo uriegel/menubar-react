@@ -42,6 +42,7 @@ const Menubar = ({ items }: MenubarProps ) => {
     const [subMenuOpened, setSubMenuOpened] = useState(false)
     const [keyboardActivated, setKeyboardActivated] = useState(false)
     const [isAccelerated, setIsAccelerated] = useState(false)
+    const lastActive = useRef(null as HTMLElement| null)
 
     const menubar = useRef<HTMLUListElement>(null)
 
@@ -51,15 +52,22 @@ const Menubar = ({ items }: MenubarProps ) => {
             setSubMenuOpened(true)
         }
 
+        const mousedownListener = () =>  {
+            if (!lastActive.current)
+                lastActive.current = document.activeElement as HTMLElement
+        }
+
         const itemCloseListener = () => setTimeout(closeMenu)
 
         const mouseOverListener = (evt: Event) => setSelectedIndex((evt as CustomEvent).detail.index)
         
         document.addEventListener('menubar-clicked', clickedListener)
+        document.addEventListener('menubar-mousedown', mousedownListener)
         document.addEventListener('menuitem-closed', itemCloseListener)
         document.addEventListener('menubar-mouseover', mouseOverListener)
         return () => {
             document.removeEventListener('menubar-clicked', clickedListener)
+            document.removeEventListener('menubar-mousedown', mousedownListener)
             document.removeEventListener('menuitem-closed', itemCloseListener)
             document.removeEventListener('menubar-clicked', mouseOverListener)
         }
@@ -79,8 +87,7 @@ const Menubar = ({ items }: MenubarProps ) => {
                         setSelectedIndex(0)
                     }
                     setIsAccelerated(true)
-                    // TODO
-                    //this.lastActive = document.activeElement as HTMLElement
+                    lastActive.current = document.activeElement as HTMLElement
                     menubar.current?.focus()
                 }
                 evt.preventDefault()
@@ -131,6 +138,9 @@ const Menubar = ({ items }: MenubarProps ) => {
         setSelectedIndex(-1)
         setKeyboardActivated(false)
         setIsAccelerated(false)
+        if (lastActive.current)
+            lastActive.current.focus()
+        lastActive.current = null
     }
 
     return (
@@ -145,9 +155,7 @@ const Menubar = ({ items }: MenubarProps ) => {
 
 export default Menubar
 
-// TODO Menu Mousedown leads to focus lost in menubar
 // TODO Shortcuts
 // TODO Accelerators
-// TODO focus last selected element
 // TODO Theming
 // TODO Automode
