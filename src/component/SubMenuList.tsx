@@ -6,9 +6,10 @@ import "./SubMenuList.css"
 
 interface SubMenuListProps {
     items: MenuItemProps[]
+    isAccelerated: boolean
 }
 
-export const SubMenuList = ({items}: SubMenuListProps) => {
+export const SubMenuList = ({items, isAccelerated}: SubMenuListProps) => {
 
     const [selectedItem, setSelectedItem] = useState(-1)
 
@@ -90,7 +91,7 @@ export const SubMenuList = ({items}: SubMenuListProps) => {
                     onMouseOver={() => setSelectedItem(itemIndex)} onClick={() => onItemClick(item)}>
                     <div className='mbr--submenu-item-content'>
                         <span className='mbr--submenu-item-check'>✓</span>
-                        <MenuItem name={item.name ?? ""} isAccelerated={false} />
+                        <MenuItem name={item.name ?? ""} isAccelerated={isAccelerated} />
                         <span className='mbr--spacer'></span>
                         <span className='mbr--shortcut'>{item.shortcut}</span>
                     </div>

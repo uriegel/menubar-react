@@ -4,3 +4,11 @@
     height: 100%;
     display: flex;
 }
+
+.mbr--accelerated {
+    text-decoration: underline;   
+}
+
+.mbr--pre {
+    white-space: pre
+}

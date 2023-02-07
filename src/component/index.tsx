@@ -170,7 +170,7 @@ const Menubar = ({ items }: MenubarProps ) => {
         <ul ref={menubar} className="mbr--menubar" onBlur={onBlur} tabIndex={-1} onKeyDown={onkeydown}>
             {items.map((n, i) =>
                 (<SubMenu key={i} name={n.name} index={i} selectedIndex={selectedIndex} subMenuOpened = { subMenuOpened }
-                items = { n.items } isAccelerated = {false} />)
+                items = { n.items } isAccelerated={isAccelerated} />)
             )}
         </ul>
     )

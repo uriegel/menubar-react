@@ -56,7 +56,7 @@ const App = () => {
 						type: MenuItemType.MenuItem,
 						shortcut: "Strg+Enter"
 					}, {
-						name: "Öffnen_mit",
+						name: "Öffnen _mit",
 						type: MenuItemType.MenuItem,
 						shortcut: "Alt+Enter"
 					}, { type: MenuItemType.Separator 						
