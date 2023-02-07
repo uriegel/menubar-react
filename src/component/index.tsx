@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './Menubar.css'
-import { getShortcuts, Shortcut } from './shortcuts'
+import { checkShortcut, getShortcuts, Shortcut } from './shortcuts'
 import { SubMenu } from './SubMenu'
 
 export enum MenuItemType {
@@ -39,6 +39,8 @@ interface MenubarProps {
     items: SubMenuProps[]
 }
 
+let shortcuts: Map<string, Shortcut[]> | null = null
+
 const Menubar = ({ items }: MenubarProps ) => {
 
     const [selectedIndex, setSelectedIndex] = useState(-1)
@@ -48,9 +50,12 @@ const Menubar = ({ items }: MenubarProps ) => {
     const lastActive = useRef(null as HTMLElement| null)
 
     const menubar = useRef<HTMLUListElement>(null)
-    const shortcuts = useRef<Map<string, Shortcut[]>>(getShortcuts(items.flatMap(n => n.items)))
+    
+    if (shortcuts == null)
+        shortcuts = getShortcuts(items.flatMap(n => n.items))
 
     useEffect(() => {
+
         const clickedListener = (evt: Event) => {
             setSelectedIndex((evt as CustomEvent).detail.index)
             setSubMenuOpened(true)
@@ -99,6 +104,20 @@ const Menubar = ({ items }: MenubarProps ) => {
             }
             else if (evt.key == 'Escape') 
                 closeMenu()
+            else {
+                const shortcutList = shortcuts?.get(evt.key)
+                if (shortcutList) {
+                    var menuItem = checkShortcut(evt, shortcutList)?.menuItem
+                    if (menuItem?.type == MenuItemType.MenuItem)
+                        document.dispatchEvent(new CustomEvent('menuitem-clicked', {
+                            bubbles: true,
+                            composed: true,
+                            detail: menuItem.key ?? menuItem.name
+                        }))
+                    else if (menuItem?.type == MenuItemType.MenuCheckItem)
+                        menuItem.setChecked(!menuItem.checked)
+                }
+            }
         }
         
         document.addEventListener('keydown', keydownListener)
@@ -159,7 +178,6 @@ const Menubar = ({ items }: MenubarProps ) => {
 
 export default Menubar
 
-// TODO Shortcuts
 // TODO Accelerators
 // TODO Theming
 // TODO Automode

@@ -120,8 +120,7 @@ const App = () => {
 					}, { type: MenuItemType.Separator 												
 					}, { 
 						name: "_Entwicklerwerkzeuge",
-						type: MenuItemType.MenuItem,
-						shortcut: "F12"
+						type: MenuItemType.MenuItem
 					}] 
 			}]} />
 			<div> 

@@ -9,6 +9,35 @@ export type Shortcut = {
     menuItem: MenuItemProps
 } 
 
+export const checkShortcut = (evt: KeyboardEvent, shortcuts: Shortcut[]) => {
+    let result: Shortcut|null = null
+    if (shortcuts) {
+        if (shortcuts[0].val == '+') {
+            if (shortcuts[0].numpad && evt.keyCode == 107) {
+                evt.preventDefault()
+                evt.stopPropagation()
+                result = shortcuts[0]
+            }
+        }
+        else if (shortcuts[0].val == '-') {
+            if (shortcuts[0].numpad && evt.keyCode == 109) {
+                evt.preventDefault()
+                evt.stopPropagation()
+                result = shortcuts[0]
+            }
+        } else {
+            const shortcut = shortcuts.filter(n => n.ctrl == evt.ctrlKey && n!.alt == evt.altKey)
+            if (shortcut.length == 1) {
+                evt.preventDefault()
+                evt.stopPropagation()
+                result = shortcuts[0]
+            }
+        } 
+    }
+    return result
+}
+
+
 export const getShortcuts = (menuItems: MenuItemProps[]) => {
     const getShortcut = (menuItem: MenuItemProps):Shortcut|null|undefined => {
 
