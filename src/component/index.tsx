@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './Menubar.css'
+import { getShortcuts, Shortcut } from './shortcuts'
 import { SubMenu } from './SubMenu'
 
 export enum MenuItemType {
@@ -47,6 +48,7 @@ const Menubar = ({ items }: MenubarProps ) => {
     const lastActive = useRef(null as HTMLElement| null)
 
     const menubar = useRef<HTMLUListElement>(null)
+    const shortcuts = useRef<Map<string, Shortcut[]>>(getShortcuts(items.flatMap(n => n.items)))
 
     useEffect(() => {
         const clickedListener = (evt: Event) => {
