@@ -160,6 +160,8 @@ const Menubar = ({ items }: MenubarProps ) => {
                 if (pos != -1) {
                     setSelectedIndex(pos)
                     setSubMenuOpened(true)
+                    e.preventDefault()
+                    e.stopPropagation()
                 }
             }
         }
@@ -187,6 +189,7 @@ const Menubar = ({ items }: MenubarProps ) => {
 
 export default Menubar
 
-// TODO Accelerators
-// TODO Theming
+// TODONo mnemonic => first letter
 // TODO Automode
+// TODO Theming
+

@@ -49,6 +49,33 @@ export const SubMenuList = ({items, isAccelerated}: SubMenuListProps) => {
                     bubbles: true,
                     composed: true
                 }))
+            } else {
+                const posarr = items
+                                .map((n, i) => ({name: n.type != MenuItemType.Separator ? n.name ?? "" : "", index: i}))
+                                .filter(n => n
+                                        .name
+                                        .toLocaleLowerCase()
+                                        .indexOf(`_${evt.key.toLocaleLowerCase()}`)!= -1)
+
+                if (posarr.length > 1) {
+                    let i = posarr.findIndex(n => n.index > selectedItem)
+                    const newPos = i == -1 ? posarr[0].index : posarr[i].index
+                    setSelectedItem(newPos)
+                    evt.preventDefault()
+                    evt.stopPropagation()
+                } else if (posarr.length == 1) {
+                    document.dispatchEvent(new CustomEvent('menuitem-clicked', {
+                        bubbles: true,
+                        composed: true,
+                        detail: posarr[0].name
+                    }))    
+                    document.dispatchEvent(new CustomEvent('menuitem-closed', {
+                        bubbles: true,
+                        composed: true
+                    }))    
+                    evt.preventDefault()
+                    evt.stopPropagation()
+                }
             }
         }
         
