@@ -109,18 +109,20 @@ const Menubar = ({ items }: MenubarProps ) => {
     }
 
     const onkeydown = (e: React.KeyboardEvent) => {
-        if (e.code == "ArrowRight") {
-            selectNext(true)
-            e.preventDefault()
-            e.stopPropagation()
-        } else if (e.code == "ArrowLeft") {
-            selectNext(false)
-            e.preventDefault()
-            e.stopPropagation()
-        } else if (e.code == "ArrowDown" && !subMenuOpened) {
-            setSubMenuOpened(true)
-            e.preventDefault()
-            e.stopPropagation()
+        if (keyboardActivated) {
+            if (e.code == "ArrowRight") {
+                selectNext(true)
+                e.preventDefault()
+                e.stopPropagation()
+            } else if (e.code == "ArrowLeft") {
+                selectNext(false)
+                e.preventDefault()
+                e.stopPropagation()
+            } else if (e.code == "ArrowDown" && !subMenuOpened) {
+                setSubMenuOpened(true)
+                e.preventDefault()
+                e.stopPropagation()
+            }
         }
     }
     
@@ -143,7 +145,7 @@ const Menubar = ({ items }: MenubarProps ) => {
 
 export default Menubar
 
-// TODO In SubMenu separate SubMenuList with seletedItem state
+// TODO Menu Mousedown leads to focus lost in menubar
 // TODO Shortcuts
 // TODO Accelerators
 // TODO focus last selected element

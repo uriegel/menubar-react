@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { MenuItemProps, MenuItemType } from '.'
+import React from 'react'
+import { MenuItemProps } from '.'
 import { MenuItem } from './MenuItem'
-import { Separator } from './Separator'
 import "./SubMenu.css"
+import { SubMenuList } from './SubMenuList'
 
 interface SubMenuComponentProps {
     name: string
@@ -14,53 +14,6 @@ interface SubMenuComponentProps {
 }
 
 export const SubMenu = ({name, index, selectedIndex, subMenuOpened, items}: SubMenuComponentProps) => {
-
-    const [selectedItem, setSelectedItem] = useState(-1)
-
-    useEffect(() => {
-        const selectNext = (next: boolean, n: number = 1) => {
-            let pos = selectedItem + (next ? n : -n);
-            if (pos < 0)
-                pos = items.length - 1
-            if (pos >= items.length)
-                pos = 0
-            if (items[pos].type != MenuItemType.Separator)
-                setSelectedItem(pos)
-            else
-                selectNext(next, 2)
-        }
-
-        const keydownListener = (evt: KeyboardEvent) => {
-            if (evt.code == "ArrowDown") {
-                selectNext(true)
-                evt.preventDefault()
-                evt.stopPropagation()
-            } else if (evt.code == "ArrowUp") {
-                selectNext(false)
-                evt.preventDefault()
-                evt.stopPropagation()
-            } else if (evt.code == "Enter" || evt.code == "Space") {
-                const item = items[selectedItem]
-                if (item.type == MenuItemType.MenuItem) {
-                    document.dispatchEvent(new CustomEvent('menuitem-clicked', {
-                        bubbles: true,
-                        composed: true,
-                        detail: item.key ?? item.name
-                    }))
-                } else if (item.type == MenuItemType.MenuCheckItem) 
-                    item.setChecked(!item.checked)
-                document.dispatchEvent(new CustomEvent('menuitem-closed', {
-                    bubbles: true,
-                    composed: true
-                }))
-            }
-        }
-        
-        document.addEventListener('keydown', keydownListener)
-        return () => {
-            document.removeEventListener('keydown', keydownListener)
-        }
-    }, [selectedItem, items, index])
 
     const onClick = () => {
         document.dispatchEvent(new CustomEvent('menubar-clicked', {
@@ -79,29 +32,6 @@ export const SubMenu = ({name, index, selectedIndex, subMenuOpened, items}: SubM
             }))    
     }
 
-    const onItemClick = (item: MenuItemProps) => {
-        switch (item.type) {
-            case MenuItemType.MenuItem:
-                document.dispatchEvent(new CustomEvent('menuitem-clicked', {
-                    bubbles: true,
-                    composed: true,
-                    detail: item.key ?? item.name
-                }))    
-                document.dispatchEvent(new CustomEvent('menuitem-closed', {
-                    bubbles: true,
-                    composed: true
-                }))    
-                break
-            case MenuItemType.MenuCheckItem:
-                item.setChecked(!item.checked)
-                document.dispatchEvent(new CustomEvent('menuitem-closed', {
-                    bubbles: true,
-                    composed: true
-                }))    
-                break
-        }
-    }
-
     return (
         <li className={`mbr--menubaritem ${index == selectedIndex ? "selected" : ""}`} 
                 onClick={onClick} onMouseOver={onMouseOver}>
@@ -109,23 +39,9 @@ export const SubMenu = ({name, index, selectedIndex, subMenuOpened, items}: SubM
                 <MenuItem name={name} isAccelerated={false} />
             </div>
             {selectedIndex == index && subMenuOpened 
-            ?
-                <div className='mbr--submenu'>
-                    <div className='mbr--submenu_list'>
-                        {items.map((n, i) =>
-                            n.type != MenuItemType.Separator
-                                ? (<div key={i} tabIndex={-1} 
-                                    className={`mbr--submenu-item-container ${i == selectedItem ? "selected" : ""} ${n.type == MenuItemType.MenuCheckItem && n.checked ? "checked" : ""}`}
-                                    onMouseOver={() => setSelectedItem(i)} onClick={() => onItemClick(n)}>
-                                    <div className='mbr--submenu-item-content'>
-                                        <span className='mbr--submenu-item-check'>✓</span>
-                                        <MenuItem name={n.name ?? ""} isAccelerated={false} />
-                                    </div>
-                                </div>)
-                                : (<Separator key={i} />)
-                        )}
-                    </div>
-                </div>
+            ? <div className='mbr--submenu'>
+                <SubMenuList items={items} />
+              </div>
             : null} 
         </li>
     )

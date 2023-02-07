@@ -1,0 +1,34 @@
+.mbr--submenu_list {
+    color: var(--mbr-menubar-color);
+    background-color: var(--mbr-menubar-background-color);
+    z-index: 10000;
+    border-color: var(--mbr-menubar-border-color);
+    border-style: solid;
+    border-width: 1px;
+    white-space: nowrap;
+    box-shadow: 2px 2px 20px 2px var(--mbr-menubar-shadow-color);
+}
+
+.mbr--submenu-item-container {
+    padding: 5px 20px 5px 0px;
+}
+
+.mbr--submenu-item-container.selected {
+    color: var(--mbr-menubar-selected-color);
+    background-color: var(--mbr-menubar-selected-background-color);
+}
+
+.mbr--submenu-item-content {
+    display: flex;
+    flex-grow: 1;
+}
+
+.mbr--submenu-item-check {
+    display: inline-block;
+    opacity: 0;
+    padding: 0px 7px;
+}
+
+.mbr--submenu-item-container.checked .mbr--submenu-item-check {
+    opacity: 1;
+}
