@@ -37,7 +37,6 @@ export const checkShortcut = (evt: KeyboardEvent, shortcuts: Shortcut[]) => {
     return result
 }
 
-
 export const getShortcuts = (menuItems: MenuItemProps[]) => {
     const getShortcut = (menuItem: MenuItemProps):Shortcut|null|undefined => {
 

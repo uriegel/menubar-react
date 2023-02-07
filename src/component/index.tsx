@@ -152,6 +152,15 @@ const Menubar = ({ items }: MenubarProps ) => {
                 setSubMenuOpened(true)
                 e.preventDefault()
                 e.stopPropagation()
+            } else if (!subMenuOpened) {
+                const pos = items
+                                .findIndex(n => n.name
+                                                    .toLocaleLowerCase()
+                                                    .indexOf(`_${e.key.toLocaleLowerCase()}`)!= -1)
+                if (pos != -1) {
+                    setSelectedIndex(pos)
+                    setSubMenuOpened(true)
+                }
             }
         }
     }
