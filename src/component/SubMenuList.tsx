@@ -84,7 +84,7 @@ export const SubMenuList = ({items}: SubMenuListProps) => {
         <div className='mbr--submenu_list'>
             {items.map((item, itemIndex) => (
                 item.type != MenuItemType.Separator
-                ? (<div tabIndex={-1} 
+                ? (<div 
                     key={itemIndex}
                     className={`mbr--submenu-item-container ${itemIndex == selectedItem ? "selected" : ""} ${item.type == MenuItemType.MenuCheckItem && item.checked ? "checked" : ""}`}
                     onMouseOver={() => setSelectedItem(itemIndex)} onClick={() => onItemClick(item)}>
