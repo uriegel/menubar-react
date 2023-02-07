@@ -91,6 +91,8 @@ export const SubMenuList = ({items}: SubMenuListProps) => {
                     <div className='mbr--submenu-item-content'>
                         <span className='mbr--submenu-item-check'>✓</span>
                         <MenuItem name={item.name ?? ""} isAccelerated={false} />
+                        <span className='mbr--spacer'></span>
+                        <span className='mbr--shortcut'>{item.shortcut}</span>
                     </div>
                 </div>)
                 : (<Separator key={itemIndex} />)

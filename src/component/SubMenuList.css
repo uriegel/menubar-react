@@ -32,3 +32,9 @@
 .mbr--submenu-item-container.checked .mbr--submenu-item-check {
     opacity: 1;
 }
+
+.mbr--spacer {
+    flex-grow: 1;
+    min-width: 20px;
+}
+

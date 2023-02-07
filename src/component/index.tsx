@@ -16,6 +16,7 @@ interface MenuClickItemProps {
     name?: string
     type: MenuItemType.MenuItem
     key?: string
+    shortcut?: string
 }
 
 interface MenuCheckItemProps{
@@ -23,6 +24,7 @@ interface MenuCheckItemProps{
     type: MenuItemType.MenuCheckItem
     checked: boolean
     setChecked: (val: boolean)=>void
+    shortcut?: string
 }
 
 export type MenuItemProps = MenuClickItemProps | MenuCheckItemProps | SeparatorProps
