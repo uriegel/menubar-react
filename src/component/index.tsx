@@ -189,7 +189,8 @@ const Menubar = ({ items }: MenubarProps ) => {
 
 export default Menubar
 
-// TODONo mnemonic => first letter
+// TODO catch menu-item click in index, call callback onMenuItem
+// TODO No mnemonic => first letter
 // TODO Automode
 // TODO Theming
 
