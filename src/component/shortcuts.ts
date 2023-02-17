@@ -95,7 +95,5 @@ export const getShortcuts = (menuItems: MenuItemProps[]) => {
                 shortcuts.set(n!.val, [n!])
             })
 
-console.log("shortcuts", shortcuts)
-
     return shortcuts
 }

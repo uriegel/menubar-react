@@ -27,7 +27,8 @@
   },
   "eslintConfig": {
     "rules": {
-      "eqeqeq": "off"
+      "eqeqeq": "off",
+      "no-mixed-operators": "off"
     },    
     "extends": [
       "react-app",

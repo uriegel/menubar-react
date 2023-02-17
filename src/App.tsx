@@ -1,29 +1,21 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import Menubar, { MenuItemType } from './component'
 
 const App = () => {
 
 	const [isHidden, setIsHidden] = useState(false)
+	const [autoMode, setAutoMode] = useState(false)
 
-    useEffect(() => {
-        
-		const menuItemClick = (evt: Event) => {
-			console.log("Click", (evt as CustomEvent).detail)
-			if ((evt as CustomEvent).detail == "END")
-				window.close()
-        }
-
-        document.addEventListener('menuitem-clicked', menuItemClick);
-		return () => {
-			document.removeEventListener('menuitem-clicked', menuItemClick)
-        }
-        
-    }, [])
+	const onAction = (key: string) => {
+		console.log("Click", key)
+		if (key == "END")
+			window.close()
+	}
 
 	return (
 		<div className="App">
-			<Menubar items={[{ 
+			<Menubar autoMode={autoMode} items={[{ 
 				name: "_Datei",
 				items: [{
 						name: "_Umbenennen",
@@ -37,7 +29,8 @@ const App = () => {
 					}, {
 						name: "_Kopieren",
 						type: MenuItemType.MenuItem,
-						shortcut: "F5"
+						shortcut: "F5",
+						key: "COPY"
 					}, {
 						name: "_Verschieden",
 						type: MenuItemType.MenuItem,
@@ -109,6 +102,11 @@ const App = () => {
 					}, { 
 						name: "Dunkles Thema",
 						type: MenuItemType.MenuItem
+					}, {
+						name: "_Menü automatisch verbergen",
+						checked: autoMode,
+						setChecked: setAutoMode,
+						type: MenuItemType.MenuCheckItem,
 					}, { type: MenuItemType.Separator 
 					}, {
 						name: "_Zoomlevel",
@@ -122,7 +120,7 @@ const App = () => {
 						name: "_Entwicklerwerkzeuge",
 						type: MenuItemType.MenuItem
 					}] 
-			}]} />
+			}]} onAction={onAction} />
 			<div> 
 			<h1>Menubar</h1>
 			<div  id="absolute">Ich bin absolut! Ich bin absolut! Ich bin absolut! Ich bin absolut! Ich bin absolut! Ich bin absolut!</div>

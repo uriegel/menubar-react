@@ -10,7 +10,7 @@ export const MenuItem = ({ name, isAccelerated }: MenuItemProps) => {
     
     const splitName = () => {
         const pos = name.indexOf('_')
-        return pos != null 
+        return pos != -1 
         ? [name.substring(0, pos), name[pos+1], name.substring(pos+2)]
         : ["", "", name]
     }

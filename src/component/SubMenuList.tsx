@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { MenuItemProps, MenuItemType } from '.'
+import { MenuClickItemProps, MenuItemProps, MenuItemType } from '.'
 import { MenuItem } from './MenuItem'
 import { Separator } from './Separator'
 import "./SubMenuList.css"
@@ -7,9 +7,10 @@ import "./SubMenuList.css"
 interface SubMenuListProps {
     items: MenuItemProps[]
     isAccelerated: boolean
+    onAction: (key: string)=>void
 }
 
-export const SubMenuList = ({items, isAccelerated}: SubMenuListProps) => {
+export const SubMenuList = ({items, isAccelerated, onAction}: SubMenuListProps) => {
 
     const [selectedItem, setSelectedItem] = useState(-1)
 
@@ -37,13 +38,9 @@ export const SubMenuList = ({items, isAccelerated}: SubMenuListProps) => {
                 evt.stopPropagation()
             } else if (evt.code == "Enter" || evt.code == "Space") {
                 const item = items[selectedItem]
-                if (item.type == MenuItemType.MenuItem) {
-                    document.dispatchEvent(new CustomEvent('menuitem-clicked', {
-                        bubbles: true,
-                        composed: true,
-                        detail: item.key ?? item.name
-                    }))
-                } else if (item.type == MenuItemType.MenuCheckItem) 
+                if (item.type == MenuItemType.MenuItem)
+                    onAction(item.key ?? item.name ?? "undefined")
+                else if (item.type == MenuItemType.MenuCheckItem) 
                     item.setChecked(!item.checked)
                 document.dispatchEvent(new CustomEvent('menuitem-closed', {
                     bubbles: true,
@@ -51,11 +48,15 @@ export const SubMenuList = ({items, isAccelerated}: SubMenuListProps) => {
                 }))
             } else {
                 const posarr = items
-                                .map((n, i) => ({name: n.type != MenuItemType.Separator ? n.name ?? "" : "", index: i}))
-                                .filter(n => n
-                                        .name
-                                        .toLocaleLowerCase()
-                                        .indexOf(`_${evt.key.toLocaleLowerCase()}`)!= -1)
+                    .map((n, i) => ({
+                        name: n.type != MenuItemType.Separator ? n.name ?? "undefined" : "undefined",
+                        key: n.type == MenuItemType.MenuItem ? n.key ?? undefined : undefined,
+                        index: i
+                    }))
+                    .filter(n => n
+                        .name
+                        .toLocaleLowerCase()
+                        .indexOf(`_${evt.key.toLocaleLowerCase()}`)!= -1)
 
                 if (posarr.length > 1) {
                     let i = posarr.findIndex(n => n.index > selectedItem)
@@ -64,11 +65,7 @@ export const SubMenuList = ({items, isAccelerated}: SubMenuListProps) => {
                     evt.preventDefault()
                     evt.stopPropagation()
                 } else if (posarr.length == 1) {
-                    document.dispatchEvent(new CustomEvent('menuitem-clicked', {
-                        bubbles: true,
-                        composed: true,
-                        detail: posarr[0].name
-                    }))    
+                    onAction(posarr[0].key ?? posarr[0].name)
                     document.dispatchEvent(new CustomEvent('menuitem-closed', {
                         bubbles: true,
                         composed: true
@@ -83,16 +80,12 @@ export const SubMenuList = ({items, isAccelerated}: SubMenuListProps) => {
         return () => {
             document.removeEventListener('keydown', keydownListener)
         }
-    }, [selectedItem, items])
+    }, [selectedItem, items, onAction])
 
     const onItemClick = (item: MenuItemProps) => {
         switch (item.type) {
             case MenuItemType.MenuItem:
-                document.dispatchEvent(new CustomEvent('menuitem-clicked', {
-                    bubbles: true,
-                    composed: true,
-                    detail: item.key ?? item.name
-                }))    
+                onAction((item as MenuClickItemProps).key ?? item.name ?? "undefined")
                 document.dispatchEvent(new CustomEvent('menuitem-closed', {
                     bubbles: true,
                     composed: true

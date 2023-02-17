@@ -37,12 +37,13 @@ interface SubMenuProps{
 
 interface MenubarProps {
     items: SubMenuProps[]
-    onAction: (key: string)=>void
+    onAction: (key: string) => void
+    autoMode?: boolean
 }
 
 let shortcuts: Map<string, Shortcut[]> | null = null
 
-const Menubar = ({ items, onAction }: MenubarProps ) => {
+const Menubar = ({ items, onAction, autoMode }: MenubarProps) => {
 
     const [selectedIndex, setSelectedIndex] = useState(-1)
     const [subMenuOpened, setSubMenuOpened] = useState(false)
@@ -98,7 +99,7 @@ const Menubar = ({ items, onAction }: MenubarProps ) => {
                     }
                     setIsAccelerated(true)
                     lastActive.current = document.activeElement as HTMLElement
-                    menubar.current?.focus()
+                    setTimeout(() => menubar.current?.focus())
                 }
                 evt.preventDefault()
                 evt.stopPropagation()                        
@@ -175,17 +176,19 @@ const Menubar = ({ items, onAction }: MenubarProps ) => {
     }
 
     return (
-        <ul ref={menubar} className="mbr--menubar" onBlur={onBlur} tabIndex={-1} onKeyDown={onkeydown}>
-            {items.map((n, i) =>
-                (<SubMenu key={i} name={n.name} index={i} selectedIndex={selectedIndex} subMenuOpened = { subMenuOpened }
-                items = { n.items } isAccelerated={isAccelerated} onAction={onAction} />)
-            )}
-        </ul>
+        !autoMode || autoMode && keyboardActivated
+        ?
+            <ul ref={menubar} className="mbr--menubar" onBlur={onBlur} tabIndex={-1} onKeyDown={onkeydown}>
+                {items.map((n, i) =>
+                    (<SubMenu key={i} name={n.name} index={i} selectedIndex={selectedIndex} subMenuOpened = { subMenuOpened }
+                    items = { n.items } isAccelerated={isAccelerated} onAction={onAction} />)
+                )}
+            </ul>
+        : <></>
     )
 }
 
 export default Menubar
 
-// TODO Automode
 // TODO Theming
 

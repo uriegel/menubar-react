@@ -11,10 +11,11 @@ interface SubMenuComponentProps {
     selectedIndex: number
     subMenuOpened: boolean
     items: MenuItemProps[]
+    onAction: (key: string)=>void
 }
 
 export const SubMenu = ({name, index, selectedIndex, subMenuOpened, 
-    items, isAccelerated}: SubMenuComponentProps) => {
+    items, isAccelerated, onAction }: SubMenuComponentProps) => {
 
     const onClick = () => {
         document.dispatchEvent(new CustomEvent('menubar-clicked', {
@@ -49,7 +50,7 @@ export const SubMenu = ({name, index, selectedIndex, subMenuOpened,
             </div>
             {selectedIndex == index && subMenuOpened 
             ? <div className='mbr--submenu'>
-                <SubMenuList items={items} isAccelerated={isAccelerated} />
+                <SubMenuList items={items} isAccelerated={isAccelerated} onAction={onAction} />
               </div>
             : null} 
         </li>
