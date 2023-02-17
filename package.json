@@ -1,6 +1,6 @@
 {
   "name": "menubar-react",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A Windows like menubar for React",
   "author": "uriegel",
   "license": "MIT",

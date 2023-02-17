@@ -51,7 +51,10 @@ export const SubMenuList = ({items, isAccelerated, onAction}: SubMenuListProps) 
                     .map((n, i) => ({
                         name: n.type != MenuItemType.Separator ? n.name ?? "undefined" : "undefined",
                         key: n.type == MenuItemType.MenuItem ? n.key ?? undefined : undefined,
-                        index: i
+                        index: i,
+                        type: n.type,
+                        setChecked: n.type == MenuItemType.MenuCheckItem ? n.setChecked : undefined,
+                        checked: n.type == MenuItemType.MenuCheckItem ? n.checked : undefined,
                     }))
                     .filter(n => n
                         .name
@@ -65,7 +68,10 @@ export const SubMenuList = ({items, isAccelerated, onAction}: SubMenuListProps) 
                     evt.preventDefault()
                     evt.stopPropagation()
                 } else if (posarr.length == 1) {
-                    onAction(posarr[0].key ?? posarr[0].name)
+                    if (posarr[0].type == MenuItemType.MenuItem)
+                        onAction(posarr[0].key ?? posarr[0].name)
+                    else if (posarr[0].type == MenuItemType.MenuCheckItem && posarr[0].setChecked) 
+                        posarr[0].setChecked(!posarr[0].checked)
                     document.dispatchEvent(new CustomEvent('menuitem-closed', {
                         bubbles: true,
                         composed: true
