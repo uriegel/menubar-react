@@ -13,7 +13,7 @@ interface SeparatorProps {
     type: MenuItemType.Separator
 }
 
-interface MenuClickItemProps {
+export interface MenuClickItemProps {
     name?: string
     type: MenuItemType.MenuItem
     key?: string
@@ -37,11 +37,12 @@ interface SubMenuProps{
 
 interface MenubarProps {
     items: SubMenuProps[]
+    onAction: (key: string)=>void
 }
 
 let shortcuts: Map<string, Shortcut[]> | null = null
 
-const Menubar = ({ items }: MenubarProps ) => {
+const Menubar = ({ items, onAction }: MenubarProps ) => {
 
     const [selectedIndex, setSelectedIndex] = useState(-1)
     const [subMenuOpened, setSubMenuOpened] = useState(false)
@@ -109,11 +110,7 @@ const Menubar = ({ items }: MenubarProps ) => {
                 if (shortcutList) {
                     var menuItem = checkShortcut(evt, shortcutList)?.menuItem
                     if (menuItem?.type == MenuItemType.MenuItem)
-                        document.dispatchEvent(new CustomEvent('menuitem-clicked', {
-                            bubbles: true,
-                            composed: true,
-                            detail: menuItem.key ?? menuItem.name
-                        }))
+                        onAction(menuItem.key ?? menuItem.name ?? "undefined")
                     else if (menuItem?.type == MenuItemType.MenuCheckItem)
                         menuItem.setChecked(!menuItem.checked)
                 }
@@ -125,7 +122,7 @@ const Menubar = ({ items }: MenubarProps ) => {
             document.removeEventListener('keydown', keydownListener)
         }
         
-    }, [isAccelerated, keyboardActivated, selectedIndex])
+    }, [isAccelerated, keyboardActivated, selectedIndex, onAction])
 
     const onBlur = () => closeMenu()
 
@@ -181,7 +178,7 @@ const Menubar = ({ items }: MenubarProps ) => {
         <ul ref={menubar} className="mbr--menubar" onBlur={onBlur} tabIndex={-1} onKeyDown={onkeydown}>
             {items.map((n, i) =>
                 (<SubMenu key={i} name={n.name} index={i} selectedIndex={selectedIndex} subMenuOpened = { subMenuOpened }
-                items = { n.items } isAccelerated={isAccelerated} />)
+                items = { n.items } isAccelerated={isAccelerated} onAction={onAction} />)
             )}
         </ul>
     )
@@ -189,8 +186,6 @@ const Menubar = ({ items }: MenubarProps ) => {
 
 export default Menubar
 
-// TODO catch menu-item click in index, call callback onMenuItem
-// TODO No mnemonic => first letter
 // TODO Automode
 // TODO Theming
 
