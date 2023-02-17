@@ -178,12 +178,14 @@ const Menubar = ({ items, onAction, autoMode }: MenubarProps) => {
     return (
         !autoMode || autoMode && keyboardActivated
         ?
-            <ul ref={menubar} className="mbr--menubar" onBlur={onBlur} tabIndex={-1} onKeyDown={onkeydown}>
-                {items.map((n, i) =>
-                    (<SubMenu key={i} name={n.name} index={i} selectedIndex={selectedIndex} subMenuOpened = { subMenuOpened }
-                    items = { n.items } isAccelerated={isAccelerated} onAction={onAction} />)
-                )}
-            </ul>
+            <div>
+                <ul ref={menubar} className="mbr--menubar" onBlur={onBlur} tabIndex={-1} onKeyDown={onkeydown}>
+                    {items.map((n, i) =>
+                        (<SubMenu key={i} name={n.name} index={i} selectedIndex={selectedIndex} subMenuOpened = { subMenuOpened }
+                        items = { n.items } isAccelerated={isAccelerated} onAction={onAction} />)
+                    )}
+                </ul>
+            </div>
         : <></>
     )
 }
