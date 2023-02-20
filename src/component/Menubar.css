@@ -11,6 +11,7 @@
 }
 
 .mbr-menubar-container {
+    color: var(--mbr-menubar-color);
     background-color: var(--mbr-menubar-background-color);
 }
 
