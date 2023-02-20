@@ -1,6 +1,6 @@
 .mbr--submenu_list {
     color: var(--mbr-menubar-color);
-    background-color: var(--mbr-menubar-background-color);
+    background-color: var(--mbr-menubar-submenu-background-color);
     z-index: 10000;
     border-color: var(--mbr-menubar-border-color);
     border-style: solid;

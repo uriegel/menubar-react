@@ -1,12 +1,17 @@
 :root {
     --mbr-menubar-color: black;
     --mbr-menubar-background-color: white;
+    --mbr-menubar-submenu-background-color: white;
     --mbr-menubar-hover-color: lightblue;
     --mbr-menubar-border-color: lightgray;
     --mbr-menubar-shadow-color: rgba(0, 0, 0, 0.2);
     --mbr-menubar-selected-color: white;
     --mbr-menubar-selected-background-color: blue;
     --mbr-menubar-separator-color: lightgray;
+}
+
+.mbr-menubar-container {
+    background-color: var(--mbr-menubar-background-color);
 }
 
 .mbr--menubar  {

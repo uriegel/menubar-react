@@ -178,7 +178,7 @@ const Menubar = ({ items, onAction, autoMode }: MenubarProps) => {
     return (
         !autoMode || autoMode && keyboardActivated
         ?
-            <div>
+            <div className='mbr-menubar-container'>
                 <ul ref={menubar} className="mbr--menubar" onBlur={onBlur} tabIndex={-1} onKeyDown={onkeydown}>
                     {items.map((n, i) =>
                         (<SubMenu key={i} name={n.name} index={i} selectedIndex={selectedIndex} subMenuOpened = { subMenuOpened }
