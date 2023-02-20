@@ -192,6 +192,5 @@ const Menubar = ({ items, onAction, autoMode }: MenubarProps) => {
 
 export default Menubar
 
-// TODO Theming
-// TODO Chortcuts not working for checkable menu items: global check state map as react state
+// TODO Shortcuts not working for checkable menu items: global check state map as react state
 
