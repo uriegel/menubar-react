@@ -111,7 +111,7 @@ const Menubar = ({ items, onAction, autoMode }: MenubarProps) => {
                 if (shortcutList) {
                     var menuItem = checkShortcut(evt, shortcutList)?.menuItem
                     if (menuItem?.type == MenuItemType.MenuItem)
-                        onAction(menuItem.key ?? menuItem.name ?? "undefined")
+                        setTimeout(() => menuItem?.type == MenuItemType.MenuItem ? onAction(menuItem.key ?? menuItem.name ?? "undefined") : {})
                     else if (menuItem?.type == MenuItemType.MenuCheckItem)
                         menuItem.setChecked(!menuItem.checked)
                 }
