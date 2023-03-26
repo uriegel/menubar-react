@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import './App.css'
 import Menubar, { MenuItemType } from './component'
 
@@ -6,6 +6,17 @@ const App = () => {
 
 	const [isHidden, setIsHidden] = useState(false)
 	const [autoMode, setAutoMode] = useState(false)
+	const isHiddenRef = useRef(false)
+	const autoModeRef = useRef(false)
+
+	const toggleHidden = () => {
+		isHiddenRef.current = !isHiddenRef.current
+		setIsHidden(isHiddenRef.current)
+	}
+	const toggleAutoMode = () => {
+		autoModeRef.current = !autoModeRef.current
+		setAutoMode(autoModeRef.current)
+	}
 
 	const onAction = (key: string) => {
 		console.log("Click", key)
@@ -86,7 +97,7 @@ const App = () => {
 					items: [{
 						name: "_Versteckte Dateien",
 						checked: isHidden,
-						setChecked: setIsHidden,
+						toggleChecked: toggleHidden,
 						type: MenuItemType.MenuCheckItem,
 						shortcut: "Strg+H"
 					}, {
@@ -105,7 +116,7 @@ const App = () => {
 					}, {
 						name: "_Menü automatisch verbergen",
 						checked: autoMode,
-						setChecked: setAutoMode,
+						toggleChecked: toggleAutoMode,
 						type: MenuItemType.MenuCheckItem,
 					}, { type: MenuItemType.Separator 
 					}, {

@@ -41,7 +41,7 @@ export const SubMenuList = ({items, isAccelerated, onAction}: SubMenuListProps) 
                 if (item.type == MenuItemType.MenuItem)
                     onAction(item.key ?? item.name ?? "undefined")
                 else if (item.type == MenuItemType.MenuCheckItem) 
-                    item.setChecked(!item.checked)
+                    item.toggleChecked()
                 document.dispatchEvent(new CustomEvent('menuitem-closed', {
                     bubbles: true,
                     composed: true
@@ -53,7 +53,7 @@ export const SubMenuList = ({items, isAccelerated, onAction}: SubMenuListProps) 
                         key: n.type == MenuItemType.MenuItem ? n.key ?? undefined : undefined,
                         index: i,
                         type: n.type,
-                        setChecked: n.type == MenuItemType.MenuCheckItem ? n.setChecked : undefined,
+                        toggleChecked: n.type == MenuItemType.MenuCheckItem ? n.toggleChecked : undefined,
                         checked: n.type == MenuItemType.MenuCheckItem ? n.checked : undefined,
                     }))
                     .filter(n => n
@@ -70,8 +70,8 @@ export const SubMenuList = ({items, isAccelerated, onAction}: SubMenuListProps) 
                 } else if (posarr.length == 1) {
                     if (posarr[0].type == MenuItemType.MenuItem)
                         onAction(posarr[0].key ?? posarr[0].name)
-                    else if (posarr[0].type == MenuItemType.MenuCheckItem && posarr[0].setChecked) 
-                        posarr[0].setChecked(!posarr[0].checked)
+                    else if (posarr[0].type == MenuItemType.MenuCheckItem && posarr[0].toggleChecked) 
+                        posarr[0].toggleChecked()
                     document.dispatchEvent(new CustomEvent('menuitem-closed', {
                         bubbles: true,
                         composed: true
@@ -98,7 +98,7 @@ export const SubMenuList = ({items, isAccelerated, onAction}: SubMenuListProps) 
                 }))    
                 break
             case MenuItemType.MenuCheckItem:
-                item.setChecked(!item.checked)
+                item.toggleChecked()
                 document.dispatchEvent(new CustomEvent('menuitem-closed', {
                     bubbles: true,
                     composed: true

@@ -24,7 +24,7 @@ interface MenuCheckItemProps{
     name?: string
     type: MenuItemType.MenuCheckItem
     checked: boolean
-    setChecked: (val: boolean)=>void
+    toggleChecked: ()=>void
     shortcut?: string
 }
 
@@ -112,8 +112,8 @@ const Menubar = ({ items, onAction, autoMode }: MenubarProps) => {
                     var menuItem = checkShortcut(evt, shortcutList)?.menuItem
                     if (menuItem?.type == MenuItemType.MenuItem)
                         setTimeout(() => menuItem?.type == MenuItemType.MenuItem ? onAction(menuItem.key ?? menuItem.name ?? "undefined") : {})
-                    else if (menuItem?.type == MenuItemType.MenuCheckItem)
-                        menuItem.setChecked(!menuItem.checked)
+                    else if (menuItem?.type == MenuItemType.MenuCheckItem) 
+                        menuItem.toggleChecked()
                 }
             }
         }
