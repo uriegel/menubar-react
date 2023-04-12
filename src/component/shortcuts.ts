@@ -30,7 +30,7 @@ export const checkShortcut = (evt: KeyboardEvent, shortcuts: Shortcut[]) => {
             if (shortcut.length == 1) {
                 evt.preventDefault()
                 evt.stopPropagation()
-                result = shortcuts[0]
+                result = shortcut[0]
             }
         } 
     }
