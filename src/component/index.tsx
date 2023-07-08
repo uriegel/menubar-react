@@ -88,19 +88,8 @@ const Menubar = ({ items, onAction, autoMode }: MenubarProps) => {
     useEffect(() => {
         const keydownListener = (evt: KeyboardEvent) => {
             if (evt.key == "Alt" && !evt.repeat && evt.code == "AltLeft") {
-                if (isAccelerated) {
-                    closeMenu()
-                    return
-                }
-                if (!keyboardActivated) {
-                    if (selectedIndex == -1) {
-                        setKeyboardActivated(true)
-                        setSelectedIndex(0)
-                    }
+                if (!keyboardActivated) 
                     setIsAccelerated(true)
-                    lastActive.current = document.activeElement as HTMLElement
-                    setTimeout(() => menubar.current?.focus())
-                }
                 evt.preventDefault()
                 evt.stopPropagation()                        
             }
@@ -110,17 +99,40 @@ const Menubar = ({ items, onAction, autoMode }: MenubarProps) => {
                 const shortcutList = shortcuts?.get(evt.key)
                 if (shortcutList) {
                     var menuItem = checkShortcut(evt, shortcutList)?.menuItem
-                    if (menuItem?.type == MenuItemType.MenuItem)
+                    if (menuItem?.type == MenuItemType.MenuItem) 
                         setTimeout(() => menuItem?.type == MenuItemType.MenuItem ? onAction(menuItem.key ?? menuItem.name ?? "undefined") : {})
                     else if (menuItem?.type == MenuItemType.MenuCheckItem) 
                         menuItem.toggleChecked()
+                    if (menuItem)
+                        closeMenu()
                 }
             }
         }
         
+        const keyupListener = (evt: KeyboardEvent) => {
+            if (evt.key == "Alt" && !evt.repeat && evt.code == "AltLeft") {
+                if (isAccelerated) {
+                    if (!keyboardActivated) {
+                        if (selectedIndex == -1) {
+                            setKeyboardActivated(true)
+                            setSelectedIndex(0)
+                        }
+                        lastActive.current = document.activeElement as HTMLElement
+                        setTimeout(() => menubar.current?.focus())
+                    } else 
+                        closeMenu()
+                } 
+                evt.preventDefault()
+                evt.stopPropagation()                        
+            }
+        }
+
         document.addEventListener('keydown', keydownListener)
+        document.addEventListener('keyup', keyupListener)
+        
         return () => {
             document.removeEventListener('keydown', keydownListener)
+            document.removeEventListener('keyup', keyupListener)
         }
         
     }, [isAccelerated, keyboardActivated, selectedIndex, onAction])
