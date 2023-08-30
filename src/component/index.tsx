@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import './Menubar.css'
 import { checkShortcut, getShortcuts, Shortcut } from './shortcuts'
 import { SubMenu } from './SubMenu'
+import { SubMenuList } from './SubMenuList'
 
 export enum MenuItemType {
     MenuItem,
@@ -203,6 +204,42 @@ const Menubar = ({ items, onAction, autoMode }: MenubarProps) => {
 }
 
 export default Menubar
+
+interface ContextMenuControlProps {
+    children: ReactNode
+    items: MenuItemProps[]
+}
+
+
+export const ContextMenuControl = ({ items, children }: ContextMenuControlProps) => {
+    const onAction = (k: string)=> {
+
+    }
+
+    const getContent = () => {
+        let content = [] as any[]
+        React.Children.forEach(children, child => 
+            content.push(child)) 
+        return content
+    }
+
+    const [ opened, setOpened] = useState(false)
+
+    const onToggle = () => setOpened(!opened)
+
+    return (
+        <span className='mbr--context-menu-control'>
+            {getContent() }
+            <span onClick={onToggle} >Ja</span>
+            <div className='mbr--submenu'>
+                { opened &&
+                    (<SubMenuList items={items} isAccelerated={false} onAction={onAction} />)
+                }
+            </div>    
+        </span>
+    )
+}
+
 
 // TODO Shortcuts not working for checkable menu items: global check state map as react state
 

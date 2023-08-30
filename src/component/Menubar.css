@@ -25,3 +25,7 @@
     height: 100%;
 }
 
+.mbr--context-menu-control {
+    float: left;
+    position: fixed;
+}

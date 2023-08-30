@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import './App.css'
-import Menubar, { MenuItemType } from './component'
+import Menubar, { ContextMenuControl, MenuItemType } from './component'
 
 const App = () => {
 
@@ -145,9 +145,51 @@ const App = () => {
 				<input type="checkbox" id="isHidden"/>
 				<span>Versteckte Dateien</span>
 				<input type="checkbox" id="showProperties"/>
-				<span>Zeige Eigenschaften</span>
 			</p>
 			</div>		 
+			<div>
+				<input></input>
+				<input></input>
+				<ContextMenuControl items={[
+					{
+						name: "_Umbenennen auch",
+						type: MenuItemType.MenuItem
+					}, {
+						name: "Er_weitertes Umbenennen",
+						type: MenuItemType.MenuItem
+					}, { type: MenuItemType.Separator 
+					}, {
+						name: "_Kopieren",
+						type: MenuItemType.MenuItem,
+						key: "COPY"
+					}, {
+						name: "_Verschieden",
+						type: MenuItemType.MenuItem
+					}, {
+						name: "_Löschen",
+						type: MenuItemType.MenuItem,
+					}, { type: MenuItemType.Separator 						
+					}, {
+						name: "_Ordner anlegen",
+						type: MenuItemType.MenuItem
+					}, {
+						name: "_Eigenschaften",
+						type: MenuItemType.MenuItem
+					}, {
+						name: "Öffnen _mit",
+						type: MenuItemType.MenuItem
+					}, { type: MenuItemType.Separator 						
+					}, {
+						name: "_Beenden",
+						type: MenuItemType.MenuItem,
+						key: "END"
+					}]}
+				>
+					Das ist ein Text
+				</ContextMenuControl>
+				
+			</div>
+	
 		</div>
 	)
 }
