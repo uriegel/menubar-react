@@ -31,12 +31,20 @@ const App = () => {
 				items: [{
 						name: "_Umbenennen",
 						type: MenuItemType.MenuItem,
-						shortcut: "F2"
+						shortcut: "F2",
+						key: "RENAME"
 					}, {
 						name: "Er_weitertes Umbenennen",
 						type: MenuItemType.MenuItem,
-						shortcut: "Strg+F2"
-					}, { type: MenuItemType.Separator 
+						shortcut: "Strg+F2",
+						key: "EXTENDED_RENAME"
+					}, {
+						name: "Kopie _anlegen",
+						type: MenuItemType.MenuItem,
+						shortcut: "Umschalt+F2",
+						key: "RENAME_AS_COPY"
+					}, {
+						type: MenuItemType.Separator 
 					}, {
 						name: "_Kopieren",
 						type: MenuItemType.MenuItem,
@@ -157,7 +165,11 @@ const App = () => {
 					}, {
 						name: "Er_weitertes Umbenennen",
 						type: MenuItemType.MenuItem
-					}, { type: MenuItemType.Separator 
+					}, {
+						name: "Kpoie _anlegen",
+						type: MenuItemType.MenuItem
+					}, {
+						type: MenuItemType.Separator 
 					}, {
 						name: "_Kopieren",
 						type: MenuItemType.MenuItem,
@@ -187,7 +199,7 @@ const App = () => {
 				>
 					Das ist ein Text
 				</ContextMenuControl>
-				
+				<span>Abschließend</span>
 			</div>
 	
 		</div>

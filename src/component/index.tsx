@@ -228,15 +228,17 @@ export const ContextMenuControl = ({ items, children }: ContextMenuControlProps)
     const onToggle = () => setOpened(!opened)
 
     return (
-        <span className='mbr--context-menu-control'>
+        <>
+            <span className='mbr--context-menu-control'>
+                <div className='mbr--submenu'>
+                    { opened &&
+                        (<SubMenuList items={items} isAccelerated={false} onAction={onAction} />)
+                    }
+                </div>    
+            </span>
             {getContent() }
-            <span onClick={onToggle} >Ja</span>
-            <div className='mbr--submenu'>
-                { opened &&
-                    (<SubMenuList items={items} isAccelerated={false} onAction={onAction} />)
-                }
-            </div>    
-        </span>
+            <span onClick={onToggle} className='mbr--context-menu-control-toggle' ></span>
+        </>
     )
 }
 

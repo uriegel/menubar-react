@@ -26,7 +26,7 @@ export const checkShortcut = (evt: KeyboardEvent, shortcuts: Shortcut[]) => {
                 result = shortcuts[0]
             }
         } else {
-            const shortcut = shortcuts.filter(n => n.ctrl == evt.ctrlKey && n!.alt == evt.altKey)
+            const shortcut = shortcuts.filter(n => n.ctrl == evt.ctrlKey && n.alt == evt.altKey && n.shift == evt.shiftKey)
             if (shortcut.length == 1) {
                 evt.preventDefault()
                 evt.stopPropagation()
@@ -65,6 +65,11 @@ export const getShortcuts = (menuItems: MenuItemProps[]) => {
             }
         
         var parts = menuItem.shortcut?.split("+")
+
+
+        console.log("parts", parts)
+
+
         if (parts?.length == 1)
             return {
                 ctrl: false,
@@ -76,7 +81,7 @@ export const getShortcuts = (menuItems: MenuItemProps[]) => {
         else if (parts != null)
             return {
                 ctrl: parts[0] == "Strg" || parts[0] == "Ctrl",
-                shift: parts[0] == "Shift",
+                shift: parts[0] == "Shift" || parts[0] == "Umschalt",
                 alt: parts[0] == "Alt",
                 val: getKey(parts[1]),
                 menuItem
