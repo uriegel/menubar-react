@@ -44,6 +44,12 @@ const App = () => {
 						shortcut: "Umschalt+F2",
 						key: "RENAME_AS_COPY"
 					}, {
+						name: "Un_sichtbar",
+						type: MenuItemType.MenuItem,
+						shortcut: "Umschalt+F3",
+						key: "RENAME_AS_COPY2",
+						invisible: true
+					}, {
 						type: MenuItemType.Separator 
 					}, {
 						name: "_Kopieren",

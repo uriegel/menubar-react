@@ -90,6 +90,7 @@ export const getShortcuts = (menuItems: MenuItemProps[]) => {
 
     const shortcuts = new Map<string, Shortcut[]>()
     menuItems
+        .filter(n => n.invisible != true)
         .map(getShortcut)
         .filter(n => n != null && n!= undefined)
         .forEach(n => {

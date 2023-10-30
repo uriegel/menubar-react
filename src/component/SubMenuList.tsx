@@ -109,21 +109,24 @@ export const SubMenuList = ({items, isAccelerated, onAction}: SubMenuListProps) 
 
     return (
         <div className='mbr--submenu_list'>
-            {items.map((item, itemIndex) => (
-                item.type != MenuItemType.Separator
-                ? (<div 
-                    key={itemIndex}
-                    className={`mbr--submenu-item-container ${itemIndex == selectedItem ? "selected" : ""} ${item.type == MenuItemType.MenuCheckItem && item.checked ? "checked" : ""}`}
-                    onMouseOver={() => setSelectedItem(itemIndex)} onClick={() => onItemClick(item)}>
-                    <div className='mbr--submenu-item-content'>
-                        <span className='mbr--submenu-item-check'>✓</span>
-                        <MenuItem name={item.name ?? ""} isAccelerated={isAccelerated} />
-                        <span className='mbr--spacer'></span>
-                        <span className='mbr--shortcut'>{item.shortcut}</span>
-                    </div>
-                </div>)
-                : (<Separator key={itemIndex} />)
-            ))}
+            {items
+                .filter(n => n.invisible != true)
+                .map((item, itemIndex) => (
+                    item.type != MenuItemType.Separator
+                    ? (<div 
+                        key={itemIndex}
+                        className={`mbr--submenu-item-container ${itemIndex == selectedItem ? "selected" : ""} ${item.type == MenuItemType.MenuCheckItem && item.checked ? "checked" : ""}`}
+                        onMouseOver={() => setSelectedItem(itemIndex)} onClick={() => onItemClick(item)}>
+                        <div className='mbr--submenu-item-content'>
+                            <span className='mbr--submenu-item-check'>✓</span>
+                            <MenuItem name={item.name ?? ""} isAccelerated={isAccelerated} />
+                            <span className='mbr--spacer'></span>
+                            <span className='mbr--shortcut'>{item.shortcut}</span>
+                        </div>
+                    </div>)
+                    : (<Separator key={itemIndex} />)
+                ))
+            }
         </div>
     )
 }

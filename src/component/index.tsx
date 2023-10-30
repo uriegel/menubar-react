@@ -12,6 +12,7 @@ export enum MenuItemType {
 
 interface SeparatorProps {
     type: MenuItemType.Separator
+    invisible?: boolean
 }
 
 export interface MenuClickItemProps {
@@ -19,6 +20,7 @@ export interface MenuClickItemProps {
     type: MenuItemType.MenuItem
     key?: string
     shortcut?: string
+    invisible?: boolean
 }
 
 interface MenuCheckItemProps{
@@ -27,6 +29,7 @@ interface MenuCheckItemProps{
     checked: boolean
     toggleChecked: ()=>void
     shortcut?: string
+    invisible?: boolean
 }
 
 export type MenuItemProps = MenuClickItemProps | MenuCheckItemProps | SeparatorProps
