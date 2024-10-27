@@ -143,6 +143,7 @@ const App = () => {
 					}, { type: MenuItemType.Separator 												
 					}, { 
 						name: "_Entwicklerwerkzeuge",
+						shortcut: "Strg+Umschalt+X",
 						type: MenuItemType.MenuItem
 					}] 
 			}]} onAction={onAction} />

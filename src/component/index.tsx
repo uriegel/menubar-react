@@ -100,7 +100,7 @@ const Menubar = ({ items, onAction, autoMode }: MenubarProps) => {
             else if (evt.key == 'Escape') 
                 closeMenu()
             else {
-                const shortcutList = shortcuts?.get(evt.key)
+                const shortcutList = shortcuts?.get(evt.key.length == 1 ? evt.key.toLowerCase() : evt.key)
                 if (shortcutList) {
                     var menuItem = checkShortcut(evt, shortcutList)?.menuItem
                     if (menuItem?.type == MenuItemType.MenuItem) 

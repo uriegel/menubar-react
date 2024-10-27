@@ -65,11 +65,6 @@ export const getShortcuts = (menuItems: MenuItemProps[]) => {
             }
         
         var parts = menuItem.shortcut?.split("+")
-
-
-        console.log("parts", parts)
-
-
         if (parts?.length == 1)
             return {
                 ctrl: false,
@@ -78,7 +73,7 @@ export const getShortcuts = (menuItems: MenuItemProps[]) => {
                 val: getKey(parts[0]),
                 menuItem
             }
-        else if (parts != null)
+        else if (parts?.length == 2)
             return {
                 ctrl: parts[0] == "Strg" || parts[0] == "Ctrl",
                 shift: parts[0] == "Shift" || parts[0] == "Umschalt",
@@ -86,7 +81,15 @@ export const getShortcuts = (menuItems: MenuItemProps[]) => {
                 val: getKey(parts[1]),
                 menuItem
             }
-    }
+            else if (parts?.length == 3)
+                return {
+                    ctrl: parts[0] == "Strg" || parts[0] == "Ctrl" || parts[1] == "Strg" || parts[1] == "Ctrl",
+                    shift: parts[0] == "Shift" || parts[0] == "Umschalt" || parts[1] == "Shift" || parts[1] == "Umschalt",
+                    alt: parts[0] == "Alt" || parts[1] == "Alt",
+                    val: getKey(parts[2]),
+                    menuItem
+                }
+        }
 
     const shortcuts = new Map<string, Shortcut[]>()
     menuItems
