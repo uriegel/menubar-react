@@ -62,7 +62,7 @@ export const SubMenuList = ({items, isAccelerated, onAction}: SubMenuListProps) 
                         .indexOf(`_${evt.key.toLocaleLowerCase()}`)!= -1)
 
                 if (posarr.length > 1) {
-                    let i = posarr.findIndex(n => n.index > selectedItem)
+                    const i = posarr.findIndex(n => n.index > selectedItem)
                     const newPos = i == -1 ? posarr[0].index : posarr[i].index
                     setSelectedItem(newPos)
                     evt.preventDefault()

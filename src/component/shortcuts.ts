@@ -64,7 +64,7 @@ export const getShortcuts = (menuItems: MenuItemProps[]) => {
                 menuItem
             }
         
-        var parts = menuItem.shortcut?.split("+")
+        const parts = menuItem.shortcut?.split("+")
         if (parts?.length == 1)
             return {
                 ctrl: false,

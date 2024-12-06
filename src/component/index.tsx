@@ -37,6 +37,7 @@ export type MenuItemProps = MenuClickItemProps | MenuCheckItemProps | SeparatorP
 interface SubMenuProps{
     name: string
     items: MenuItemProps[]
+    isHidden?: boolean
 }
 
 interface MenubarProps {
@@ -58,7 +59,7 @@ const Menubar = ({ items, onAction, autoMode }: MenubarProps) => {
     const menubar = useRef<HTMLUListElement>(null)
     
     if (shortcuts == null)
-        shortcuts = getShortcuts(items.flatMap(n => n.items))
+        shortcuts = getShortcuts(items.flatMap(n => n.items).filter(n => n.invisible != true))
 
     useEffect(() => {
 
@@ -102,7 +103,7 @@ const Menubar = ({ items, onAction, autoMode }: MenubarProps) => {
             else {
                 const shortcutList = shortcuts?.get(evt.key.length == 1 ? evt.key.toLowerCase() : evt.key)
                 if (shortcutList) {
-                    var menuItem = checkShortcut(evt, shortcutList)?.menuItem
+                    const menuItem = checkShortcut(evt, shortcutList)?.menuItem
                     if (menuItem?.type == MenuItemType.MenuItem) 
                         setTimeout(() => menuItem?.type == MenuItemType.MenuItem ? onAction(menuItem.key ?? menuItem.name ?? "undefined") : {})
                     else if (menuItem?.type == MenuItemType.MenuCheckItem) 
@@ -196,7 +197,7 @@ const Menubar = ({ items, onAction, autoMode }: MenubarProps) => {
         ?
             <div className='mbr-menubar-container'>
                 <ul ref={menubar} className="mbr--menubar" onBlur={onBlur} tabIndex={-1} onKeyDown={onkeydown}>
-                    {items.map((n, i) =>
+                    {items.filter(n => n.isHidden != true).map((n, i) =>
                         (<SubMenu key={i} name={n.name} index={i} selectedIndex={selectedIndex} subMenuOpened = { subMenuOpened }
                         items = { n.items } isAccelerated={isAccelerated} onAction={onAction} />)
                     )}
@@ -215,12 +216,10 @@ interface ContextMenuControlProps {
 
 
 export const ContextMenuControl = ({ items, children }: ContextMenuControlProps) => {
-    const onAction = (k: string)=> {
-
-    }
+    const onAction = ()=> {}
 
     const getContent = () => {
-        let content = [] as any[]
+        const content = [] as React.ReactNode[]
         React.Children.forEach(children, child => 
             content.push(child)) 
         return content
@@ -245,6 +244,4 @@ export const ContextMenuControl = ({ items, children }: ContextMenuControlProps)
     )
 }
 
-
-// TODO Shortcuts not working for checkable menu items: global check state map as react state
 

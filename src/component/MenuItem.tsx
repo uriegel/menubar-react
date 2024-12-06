@@ -14,7 +14,7 @@ export const MenuItem = ({ name, isAccelerated }: MenuItemProps) => {
         ? [name.substring(0, pos), name[pos+1], name.substring(pos+2)]
         : ["", "", name]
     }
-    let [pre, acc, post] = splitName()
+    const [pre, acc, post] = splitName()
 
     return (
         <div className='mbr--menuitem'>
