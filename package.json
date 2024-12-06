@@ -1,11 +1,12 @@
 {
   "name": "menubar-react",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "type": "module",
   "description": "A Windows like menubar for React",
   "author": "uriegel",
   "license": "MIT",
   "repository": "uriegel/menubar-react",
+  "keywords": ["react", "menubar", "menu"],
   "main": "dist/index.js",
   "files": [
     "dist"

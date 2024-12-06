@@ -105,6 +105,15 @@ const App = () => {
 						name: "_Selektion entfernen",
 						type: MenuItemType.MenuItem,
 						shortcut: "Num-"
+					}, {
+						type: MenuItemType.Separator,
+						invisible: true,
+					}, {
+						name: "_Versteckt",
+						type: MenuItemType.MenuItem,
+						invisible: true,
+						key: "HIDDEN",
+						shortcut: "F10"
 					}] 
 				}, { 
 					name: "_Ansicht",

@@ -38,6 +38,11 @@ export const checkShortcut = (evt: KeyboardEvent, shortcuts: Shortcut[]) => {
 }
 
 export const getShortcuts = (menuItems: MenuItemProps[]) => {
+
+
+console.log("Alle Kurzschlüsse", menuItems)
+
+
     const getShortcut = (menuItem: MenuItemProps):Shortcut|null|undefined => {
 
         const getKey = (k: string) => k.length == 1 ? k.toLowerCase() : k
